@@ -1,0 +1,34 @@
+{
+    "student": {
+        "IPHONE": 32,
+        "IPHONEColor": "hsl(125, 70%, 50%)",
+        "Apple watch": 4,
+        "Apple watchColor": "hsl(332, 70%, 50%)",
+        "Android": 94,
+        "AndroidColor": "hsl(314, 70%, 50%)",
+        "Card": 135,
+        "CardColor": "hsl(277, 70%, 50%)"
+    },
+    "staff": {
+        "patron": "Staff",
+        "IPHONE": 143,
+        "IPHONEColor": "hsl(35, 70%, 50%)",
+        "Apple watch": 152,
+        "Apple watchColor": "hsl(143, 70%, 50%)",
+        "Android": 22,
+        "AndroidColor": "hsl(163, 70%, 50%)",
+        "Card": 45,
+        "CardColor": "hsl(18, 70%, 50%)"
+    },
+    "affiliates": {
+        "patron": "Affiliate",
+        "IPHONE": 74,
+        "IPHONEColor": "hsl(85, 70%, 50%)",
+        "Apple watch": 124,
+        "Apple watchColor": "hsl(52, 70%, 50%)",
+        "Android": 153,
+        "AndroidColor": "hsl(18, 70%, 50%)",
+        "Card": 106,
+        "CardColor": "hsl(59, 70%, 50%)"
+    }
+}
