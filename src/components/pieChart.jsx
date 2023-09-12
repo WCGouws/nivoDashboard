@@ -1,4 +1,4 @@
-import { useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { ResponsivePie } from '@nivo/pie'
 import { colorTokens } from "../theme";
 import { PieMockData as mockData } from "../data/mockData";
@@ -64,95 +64,105 @@ const PieChart = (props) => {
     }, [props.data])
 
     return (
-        <ResponsivePie
-            data={pieData ? pieData : mockData}
-            theme={{
-                axis: {
-                    domain: {
-                        line: {
-                            stroke: colors.indigo[700]
-                        }
-                    },
-                    legend: {
-                        text: {
-                            fill: colors.lightGray[700]
-                        }
-                    },
-                    ticks: {
-                        line: {
-                            stroke: colors.lightGray[700],
-                            strokeWidth: 1
+        <>
+            {pieData ? <ResponsivePie
+                data={pieData ? pieData : mockData}
+                theme={{
+                    axis: {
+                        domain: {
+                            line: {
+                                stroke: colors.indigo[700]
+                            }
                         },
-                        text: {
-                            fill: colors.lightGray[700]
-                        }
-                    },
-                    legends: {
-                        text: {
-                            fill: colors.lightGray[700]
-                        }
-                    }
-                }
-            }}
-            margin={{ top: 40, right: 130, bottom: 80, left: 50 }}
-            min-width={0}
-            innerRadius={props.makePie ? 0 : 0.3}
-            padAngle={0.7}
-            cornerRadius={3}
-            activeOuterRadiusOffset={8}
-            borderWidth={1}
-            borderColor={{
-                from: 'color',
-                modifiers: [
-                    [
-                        'darker',
-                        0.2
-                    ]
-                ]
-            }}
-            enableArcLinkLabels={false}
-            arcLinkLabelsSkipAngle={10}
-            arcLinkLabelsTextColor="#333333"
-            arcLinkLabelsDiagonalLength={10}
-            arcLinkLabelsThickness={2}
-            arcLinkLabelsColor={{ from: 'color' }}
-            arcLabelsSkipAngle={10}
-            enableArcLabels={props.arcLabel ? true : false}
-            arcLabelsTextColor={{
-                from: 'color',
-                modifiers: [
-                    [
-                        'darker',
-                        2
-                    ]
-                ]
-            }}
-            legends={[
-                {
-                    anchor: 'right',
-                    direction: 'column',
-                    justify: false,
-                    translateX: 80,
-                    translateY: 10,
-                    itemsSpacing: 0,
-                    itemWidth: 69,
-                    itemHeight: 20,
-                    itemTextColor: colors.lightGray[600],
-                    itemDirection: 'left-to-right',
-                    itemOpacity: 1,
-                    symbolSize: 12,
-                    symbolShape: 'circle',
-                    effects: [
-                        {
-                            on: 'hover',
-                            style: {
-                                itemTextColor: colors.lightGray[700]
+                        legend: {
+                            text: {
+                                fill: colors.lightGray[700]
+                            }
+                        },
+                        ticks: {
+                            line: {
+                                stroke: colors.lightGray[700],
+                                strokeWidth: 1
+                            },
+                            text: {
+                                fill: colors.lightGray[700]
+                            }
+                        },
+                        legends: {
+                            text: {
+                                fill: colors.lightGray[700]
                             }
                         }
+                    }
+                }}
+                margin={{ top: 10, right: 100, bottom: 20, left: 50 }}
+                min-width={0}
+                innerRadius={props.makePie ? 0 : 0.3}
+                padAngle={0.7}
+                cornerRadius={3}
+                activeOuterRadiusOffset={8}
+                borderWidth={1}
+                borderColor={{
+                    from: 'color',
+                    modifiers: [
+                        [
+                            'darker',
+                            0.2
+                        ]
                     ]
-                }
-            ]}
-        />
+                }}
+                enableArcLinkLabels={false}
+                arcLinkLabelsSkipAngle={10}
+                arcLinkLabelsTextColor="#333333"
+                arcLinkLabelsDiagonalLength={10}
+                arcLinkLabelsThickness={2}
+                arcLinkLabelsColor={{ from: 'color' }}
+                arcLabelsSkipAngle={10}
+                enableArcLabels={props.arcLabel ? true : false}
+                arcLabelsTextColor={{
+                    from: 'color',
+                    modifiers: [
+                        [
+                            'darker',
+                            2
+                        ]
+                    ]
+                }}
+                legends={[
+                    {
+                        anchor: 'bottom-right',
+                        direction: 'column',
+                        justify: false,
+                        translateX: 80,
+                        translateY: 10,
+                        itemsSpacing: 4,
+                        itemWidth: 200,
+                        itemHeight: 20,
+                        itemTextColor: colors.lightGray[600],
+                        itemDirection: 'left-to-right',
+                        itemOpacity: 1,
+                        symbolSize: 12,
+                        symbolShape: 'circle',
+                        effects: [
+                            {
+                                on: 'hover',
+                                style: {
+                                    itemTextColor: colors.lightGray[700]
+                                }
+                            }
+                        ]
+                    }
+                ]}
+            /> :
+                <Box display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    <img src="loading.gif" alt="Loading indicator not found" style={{ width: "4rem", marginTop: "4rem" }} />
+                </Box>}
+
+        </>
+
     )
 }
 

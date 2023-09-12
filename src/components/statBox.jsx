@@ -14,7 +14,7 @@ const StatBox = ({ tilte, amount }) => {
             </Box>
             <Box display="flex" justifyContent="space-between">
                 <Typography variant="h5" sx={{ color: colors.gray[100] }}>
-                    {amount}
+                    {amount ? amount : "..."}
                 </Typography>
             </Box>
 

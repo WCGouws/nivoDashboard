@@ -1,9 +1,10 @@
-import { useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import { colorTokens } from "../theme";
 import { barMockData as data } from "../data/mockData";
 import { useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react';
+
 
 
 const BarChart = (props) => {
@@ -114,155 +115,168 @@ const BarChart = (props) => {
     }, [props.data])
 
     return (
-        <ResponsiveBar
+        <>
+            {barData ?
+                <ResponsiveBar
 
-            data={barData ? barData : data}
-            layout={props.makeHorizontal ? "horizontal" : "vertical"}
-            theme={{
-                axis: {
-                    domain: {
-                        line: {
-                            stroke: colors.indigo[700]
-                        }
-                    },
-                    legend: {
-                        text: {
-                            fill: colors.lightGray[700]
-                        }
-                    },
-                    ticks: {
-                        line: {
-                            stroke: colors.lightGray[700],
-                            strokeWidth: 1
+                    data={barData ? barData : data}
+                    layout={props.makeHorizontal ? "horizontal" : "vertical"}
+                    theme={{
+                        axis: {
+                            domain: {
+                                line: {
+                                    stroke: colors.indigo[700]
+                                }
+                            },
+                            legend: {
+                                text: {
+                                    fill: colors.lightGray[700]
+                                }
+                            },
+                            ticks: {
+                                line: {
+                                    stroke: colors.lightGray[700],
+                                    strokeWidth: 1
+                                },
+                                text: {
+                                    fill: colors.lightGray[700]
+                                }
+                            }
                         },
-                        text: {
-                            fill: colors.lightGray[700]
-                        }
-                    }
-                },
-                legends: {
-                    text: {
-                        fill: colors.lightGray[700]
-                    }
-                }
-            }}
-            keys={[
-                'IPHONE',
-                'APPLEWATCH',
-                'ANDROID',
-                'PHYSICALCARD',
-
-            ]}
-            indexBy="column"
-            margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-            padding={0.35}
-            valueScale={{ type: 'linear' }}
-            indexScale={{ type: 'band', round: true }}
-            colors={{ scheme: 'nivo' }}
-            min-width={0}
-            defs={[
-                {
-                    id: 'dots',
-                    type: 'patternDots',
-                    background: 'inherit',
-                    color: '#38bcb2',
-                    size: 4,
-                    padding: 1,
-                    stagger: true
-                },
-                {
-                    id: 'lines',
-                    type: 'patternLines',
-                    background: 'inherit',
-                    color: '#eed312',
-                    rotation: -45,
-                    lineWidth: 6,
-                    spacing: 10
-                }
-            ]}
-            fill={[
-                {
-                    match: {
-                        id: 'IPHONE'
-                    },
-                    id: 'dots'
-                },
-                {
-                    match: {
-                        id: 'ANDROID'
-                    },
-                    id: 'lines'
-                }
-            ]}
-            borderRadius={4}
-            borderColor={{
-                from: 'color',
-                modifiers: [
-                    [
-                        'darker',
-                        '1.2'
-                    ]
-                ]
-            }}
-            axisTop={null}
-            axisRight={null}
-            axisBottom={{
-                tickSize: 5,
-                tickPadding: 5,
-                tickRotation: 0,
-                legend: 'Patron',
-                legendPosition: 'middle',
-                legendOffset: 32
-            }}
-            axisLeft={{
-                tickSize: 5,
-                tickPadding: 5,
-                tickRotation: 0,
-                legend: '',
-                legendPosition: 'middle',
-                legendOffset: -40
-            }}
-            enableLabel={false}
-            labelSkipWidth={7}
-            labelSkipHeight={12}
-            labelTextColor={{
-                from: 'color',
-                modifiers: [
-                    [
-                        'darker',
-                        1.6
-                    ]
-                ]
-            }}
-            legends={[
-                {
-                    dataFrom: 'keys',
-                    anchor: 'bottom-right',
-                    direction: 'column',
-                    justify: false,
-                    translateX: 120,
-                    translateY: 0,
-                    itemsSpacing: 2,
-                    itemWidth: 100,
-                    itemHeight: 20,
-                    itemDirection: 'left-to-right',
-                    itemOpacity: 0.85,
-                    symbolSize: 20,
-                    effects: [
-                        {
-                            on: 'hover',
-                            style: {
-                                itemOpacity: 1
+                        legends: {
+                            text: {
+                                fill: colors.lightGray[700]
                             }
                         }
-                    ]
-                }
-            ]}
-            role="application"
-            isFocusable={true}
-            ariaLabel="Nivo bar chart demo"
-            barAriaLabel={e => e.id + ": " + e.formattedValue + " in country: " + e.indexValue}
-        />
+                    }}
+                    keys={[
+                        'IPHONE',
+                        'APPLEWATCH',
+                        'ANDROID',
+                        'PHYSICALCARD',
+
+                    ]}
+                    indexBy="column"
+                    margin={{ top: 50, right: 150, bottom: 50, left: 90 }}
+                    padding={0.35}
+                    valueScale={{ type: 'linear' }}
+                    indexScale={{ type: 'band', round: true }}
+                    colors={{ scheme: 'nivo' }}
+                    min-width={0}
+                    defs={[
+                        {
+                            id: 'dots',
+                            type: 'patternDots',
+                            background: 'inherit',
+                            color: '#38bcb2',
+                            size: 4,
+                            padding: 1,
+                            stagger: true
+                        },
+                        {
+                            id: 'lines',
+                            type: 'patternLines',
+                            background: 'inherit',
+                            color: '#eed312',
+                            rotation: -45,
+                            lineWidth: 6,
+                            spacing: 10
+                        }
+                    ]}
+                    fill={[
+                        {
+                            match: {
+                                id: 'IPHONE'
+                            },
+                            id: 'dots'
+                        },
+                        {
+                            match: {
+                                id: 'ANDROID'
+                            },
+                            id: 'lines'
+                        }
+                    ]}
+                    borderRadius={4}
+                    borderColor={{
+                        from: 'color',
+                        modifiers: [
+                            [
+                                'darker',
+                                '1.2'
+                            ]
+                        ]
+                    }}
+                    axisTop={null}
+                    axisRight={null}
+                    axisBottom={{
+                        tickSize: 5,
+                        tickPadding: 5,
+                        tickRotation: 0,
+                        legend: 'Patron',
+                        legendPosition: 'middle',
+                        legendOffset: 32
+                    }}
+                    axisLeft={{
+                        tickSize: 5,
+                        tickPadding: 5,
+                        tickRotation: 0,
+                        legend: '',
+                        legendPosition: 'middle',
+                        legendOffset: -40
+                    }}
+                    enableLabel={false}
+                    labelSkipWidth={7}
+                    labelSkipHeight={12}
+                    labelTextColor={{
+                        from: 'color',
+                        modifiers: [
+                            [
+                                'darker',
+                                1.6
+                            ]
+                        ]
+                    }}
+                    legends={[
+                        {
+                            dataFrom: 'keys',
+                            anchor: 'bottom-right',
+                            direction: 'column',
+                            justify: false,
+                            translateX: 120,
+                            translateY: 0,
+                            itemsSpacing: 2,
+                            itemWidth: 100,
+                            itemHeight: 20,
+                            itemDirection: 'left-to-right',
+                            itemOpacity: 0.85,
+                            symbolSize: 20,
+                            effects: [
+                                {
+                                    on: 'hover',
+                                    style: {
+                                        itemOpacity: 1
+                                    }
+                                }
+                            ]
+                        }
+                    ]}
+                    role="application"
+                    isFocusable={true}
+                    ariaLabel="Nivo bar chart demo"
+                    barAriaLabel={e => e.id + ": " + e.formattedValue + " in country: " + e.indexValue}
+                /> :
+                <Box display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    <img src="loading.gif" alt="Loading indicator not found" style={{ width: "4rem", marginTop: "4rem" }} />
+                </Box>
+
+            }
+
+        </>
+
     )
 }
 
