@@ -43,16 +43,20 @@ const BarChart = (props) => {
         //     fetch("http://localhost:3001/affiliates")
         // ])
 
-        const students = await studentsRes.body.json();
-        const staff = await staffRes.body.json();
-        const affiliates = await affiliatesRes.body.json();
+        let students = await studentsRes.text();
+        let staff = await staffRes.text();
+        let affiliates = await affiliatesRes.text();
+
+        students = await JSON.parse(students)
+        staff = await JSON.parse(staff)
+        affiliates = await JSON.parse(affiliates)
 
         const response = {
-            "Students": students,
-            "Staff": staff,
-            "Affiliates": affiliates
+            "Students": students.body,
+            "Staff": staff.body,
+            "Affiliates": affiliates.body
         }
-        console.log(response)
+
         return response;
     }
 

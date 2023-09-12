@@ -30,9 +30,8 @@ const PieChart = (props) => {
 
     useEffect(() => {
 
-        if (props.displayAll) {
+        if (props.data && props.data !== "" && props.displayAll) {
             let refineData = [];
-
             for (let item in props.data) {
                 refineData.push({
                     "id": item,

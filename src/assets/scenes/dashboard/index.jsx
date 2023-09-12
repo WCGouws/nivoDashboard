@@ -21,14 +21,12 @@ const DashBoard = (props) => {
         async function APICall() {
             // let response = await fetch(`http://localhost:3001/${props.endPoint}`);
             let response = await fetch(`https://raox6sjwhzkfl26hyiiwgcpaem0wbxsh.lambda-url.us-east-1.on.aws/?fetchGroup=${props.endPoint}`)
-
-            console.log(response)
-            let data = await response.body.json();
-            console.log("data", data);
+            let data = await response.text()
+            data = await JSON.parse(data)
+            data = data.body
             for (let item in data) {
                 data[item] = parseInt(data[item])
             }
-            console.log(data)
             setResponseData(data);
         }
         APICall()
