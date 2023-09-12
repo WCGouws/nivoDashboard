@@ -1,7 +1,7 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { colorTokens } from "../theme";
 
-const StatBox = ({ tilte, subtitle }) => {
+const StatBox = ({ tilte, amount }) => {
     const theme = useTheme();
     const colors = colorTokens(theme.palette.mode);
 
@@ -14,7 +14,7 @@ const StatBox = ({ tilte, subtitle }) => {
             </Box>
             <Box display="flex" justifyContent="space-between">
                 <Typography variant="h5" sx={{ color: colors.gray[100] }}>
-                    {subtitle}
+                    {amount}
                 </Typography>
             </Box>
 

@@ -2,14 +2,52 @@ import { useTheme } from "@mui/material";
 import { ResponsiveLine } from '@nivo/line'
 import { colorTokens } from "../theme";
 import { lineMockData as data } from "../data/mockData";
+import { useEffect, useState } from "react";
 
-const LineChart = () => {
+const LineChart = (props) => {
     const theme = useTheme();
     const colors = colorTokens(theme.palette.mode);
+    const [lineData, setLineData] = useState(false);
 
+    const displayReference = {
+        "PHYSICALCARD": {
+            displayName: "Physical Card",
+            color: "hsl(194, 70%, 50%)"
+        },
+        "ANDROID": {
+            displayName: "Android",
+            color: "hsl(290, 70%, 50%))"
+        },
+        "IPHONE": {
+            displayName: "iPhone",
+            color: "hsl(121, 70%, 50%)"
+        },
+        "APPLEWATCH": {
+            displayName: "Apple Watch",
+            color: "hsl(93, 70%, 50%)"
+        },
+    }
+
+    useEffect(() => {
+        if (props.data && props.data !== "") {
+            let refineData = [];
+            for (let device in props.data) {
+                refineData.push({
+                    "id": device,
+                    "color": displayReference[device]["color"],
+                    "data": [{
+                        "x": displayReference[device]["displayName"],
+                        "y": parseInt(props.data[device]),
+                    }],
+                })
+            }
+            setLineData(refineData)
+        }
+
+    }, [props.data])
     return (
         <ResponsiveLine
-            data={data}
+            data={lineData ? lineData : data}
             theme={{
                 axis: {
                     domain: {
@@ -40,6 +78,7 @@ const LineChart = () => {
             }}
             margin={{ top: 30, right: 120, bottom: 60, left: 40 }}
             xScale={{ type: 'point' }}
+            min-width={0}
             yScale={{
                 type: 'linear',
                 min: 'auto',

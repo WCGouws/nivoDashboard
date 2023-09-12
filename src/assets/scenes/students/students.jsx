@@ -10,6 +10,7 @@ import StatBox from "../../../components/statBox";
 const Student = () => {
     const theme = useTheme();
     const colors = colorTokens(theme.palette.mode);
+
     return (<Box m="20px" >
         <Box display="flex" justifyContent="space-between" alignItems="center">
             <Header title="STUDENTS" subtitle="MIT Student Overview" />

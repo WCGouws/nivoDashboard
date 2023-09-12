@@ -3,32 +3,117 @@ import { ResponsiveBar } from "@nivo/bar";
 import { colorTokens } from "../theme";
 import { barMockData as data } from "../data/mockData";
 import { useLocation } from 'react-router-dom'
-import { useEffect } from "react";
+import { useEffect, useState } from 'react';
 
-const BarChart = () => {
+
+const BarChart = (props) => {
     const theme = useTheme();
     const colors = colorTokens(theme.palette.mode);
-    // const [dataToRender, setDataToRender] = useState('');
+    const [barData, setBarData] = useState('');
 
+    const displayReference = {
+        "PHYSICALCARD": {
+            displayName: "Physical Card",
+            color: "hsl(277, 70%, 50%)"
+        },
+        "ANDROID": {
+            displayName: "Android",
+            color: "hsl(314, 70%, 50%)"
+        },
+        "IPHONE": {
+            displayName: "iPhone",
+            color: "hsl(125, 70%, 50%)"
+        },
+        "APPLEWATCH": {
+            displayName: "Apple Watch",
+            color: "hsl(332, 70%, 50%)"
+        },
+    }
 
+    async function fetchSeparates() {
+        const [studentsRes, staffRes, affiliatesRes] = await Promise.all([
+            fetch("https://raox6sjwhzkfl26hyiiwgcpaem0wbxsh.lambda-url.us-east-1.on.aws/?fetchGroup=students"),
+            fetch("https://raox6sjwhzkfl26hyiiwgcpaem0wbxsh.lambda-url.us-east-1.on.aws/?fetchGroup=staff"),
+            fetch("https://raox6sjwhzkfl26hyiiwgcpaem0wbxsh.lambda-url.us-east-1.on.aws/?fetchGroup=affiliates")
 
-    // useEffect(() => {
-    //     const currentRoute = useLocation(); // /students
+        ])
+        // const [studentsRes, staffRes, affiliatesRes] = await Promise.all([
+        //     fetch("http://localhost:3001/students"),
+        //     fetch("http://localhost:3001/staff"),
+        //     fetch("http://localhost:3001/affiliates")
+        // ])
 
-    //     if (currentRoute === '/students') {
-    //         setDataToRender(data["students"])
-    //     } else if (currentRoute === "/staff") {
-    //         setDataToRender(data["staff"])
-    //     } else if (currentRoute === "/affiliates") {
-    //         setDataToRender(data["/affiliates"])
-    //     }
-    // }, [])
+        const students = await studentsRes.body.json();
+        const staff = await staffRes.body.json();
+        const affiliates = await affiliatesRes.body.json();
 
+        const response = {
+            "Students": students,
+            "Staff": staff,
+            "Affiliates": affiliates
+        }
+        console.log(response)
+        return response;
+    }
+
+    useEffect(() => {
+
+        async function handleDataRestructure() {
+            if (props.displayAll) {
+                const seperates = await fetchSeparates();
+
+                let refinedData = [];
+
+                for (let patron in seperates) {
+                    let miniObj = { "column": patron }
+                    for (let device in seperates[patron]) {
+                        miniObj[device] = seperates[patron][device]
+                        miniObj[`${device}Color`] = displayReference[device]["color"]
+                    }
+                    refinedData.push(miniObj)
+                }
+                setBarData(refinedData)
+            } else if (props.data && props.data !== "" && props.watchPhone) {
+                let refinedData = [];
+                let watchTotal = props.data["APPLEWATCH"]
+                let phoneTotal = props.data["IPHONE"]
+                refinedData.push(
+                    {
+                        "column": "APPLEWATCH",
+                        "APPLEWATCH": watchTotal,
+                        "APPLEWATCHColor": "hsl(332, 70%, 50%)"
+                    },
+                    {
+                        "column": "IPHONE",
+                        "IPHONE": phoneTotal,
+                        "IPHONEColor": "hsl(125, 70%, 50%)"
+                    }
+                )
+                setBarData(refinedData)
+            } else {
+                if (props.data && props.data !== "") {
+                    let refinedData = [];
+                    for (let device in props.data) {
+                        refinedData.push({
+                            "column": device,
+                            [device]: props.data[device],
+                            [`${device}Color`]: displayReference[device]["color"]
+                        })
+                    }
+                    setBarData(refinedData)
+                }
+            }
+        }
+
+        handleDataRestructure()
+
+    }, [props.data])
 
     return (
         <ResponsiveBar
-            // data={dataToRender}
-            data={data}
+
+            data={barData ? barData : data}
+            layout={props.makeHorizontal ? "horizontal" : "vertical"}
             theme={{
                 axis: {
                     domain: {
@@ -59,17 +144,18 @@ const BarChart = () => {
             }}
             keys={[
                 'IPHONE',
-                'Apple watch',
-                'Android',
-                'Card',
+                'APPLEWATCH',
+                'ANDROID',
+                'PHYSICALCARD',
 
             ]}
-            indexBy="patron"
+            indexBy="column"
             margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
             padding={0.35}
             valueScale={{ type: 'linear' }}
             indexScale={{ type: 'band', round: true }}
             colors={{ scheme: 'nivo' }}
+            min-width={0}
             defs={[
                 {
                     id: 'dots',
@@ -99,7 +185,7 @@ const BarChart = () => {
                 },
                 {
                     match: {
-                        id: 'Android'
+                        id: 'ANDROID'
                     },
                     id: 'lines'
                 }

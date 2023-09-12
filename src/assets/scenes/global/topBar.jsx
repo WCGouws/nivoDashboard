@@ -50,7 +50,7 @@ const TopBar = () => {
                 </Box>
             </Box>
             <Box display="flex" justifyContent="space-between" p={2}>
-                <IconButton component={Link} to="/">
+                <IconButton component={Link} to="/all">
                     <HomeoutlinedIcon />
                     Home
                 </IconButton>
@@ -58,7 +58,7 @@ const TopBar = () => {
                     <PeopleoutlinedIcon />
                     Students
                 </IconButton>
-                <IconButton component={Link} to="/Staff">
+                <IconButton component={Link} to="/staff">
                     <PersonoutlinedIcon />
                     Staff
                 </IconButton>
