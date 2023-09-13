@@ -95,6 +95,7 @@ const PieChart = (props) => {
                         }
                     }
                 }}
+                colors={{ scheme: 'pastel2' }}
                 margin={{ top: 10, right: 100, bottom: 20, left: 50 }}
                 min-width={0}
                 innerRadius={props.makePie ? 0 : 0.3}
@@ -119,15 +120,8 @@ const PieChart = (props) => {
                 arcLinkLabelsColor={{ from: 'color' }}
                 arcLabelsSkipAngle={10}
                 enableArcLabels={props.arcLabel ? true : false}
-                arcLabelsTextColor={{
-                    from: 'color',
-                    modifiers: [
-                        [
-                            'darker',
-                            2
-                        ]
-                    ]
-                }}
+
+                arcLabelsTextColor="#090b0e"
                 legends={[
                     {
                         anchor: 'bottom-right',
@@ -153,6 +147,13 @@ const PieChart = (props) => {
                         ]
                     }
                 ]}
+                tooltip={(item) => {
+                    return (
+                        <div style={{ background: colors.blue[800], padding: '6px 30px' }}>
+                            <div>{item.datum.value}</div>
+                        </div>
+                    )
+                }}
             /> :
                 <Box display="flex"
                     justifyContent="center"

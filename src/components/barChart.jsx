@@ -11,6 +11,12 @@ const BarChart = (props) => {
     const theme = useTheme();
     const colors = colorTokens(theme.palette.mode);
     const [barData, setBarData] = useState('');
+    const [legendList, setLegendList] = useState([
+        'IPHONE',
+        'APPLEWATCH',
+        'ANDROID',
+        'PHYSICALCARD',
+    ])
 
     const displayReference = {
         "PHYSICALCARD": {
@@ -114,6 +120,16 @@ const BarChart = (props) => {
 
     }, [props.data])
 
+    useEffect(() => {
+        if (props.watchPhone) {
+            setLegendList([
+                'IPHONE',
+                'APPLEWATCH'
+            ])
+        }
+    }, [])
+
+
     return (
         <>
             {barData ?
@@ -149,19 +165,13 @@ const BarChart = (props) => {
                             }
                         }
                     }}
-                    keys={[
-                        'IPHONE',
-                        'APPLEWATCH',
-                        'ANDROID',
-                        'PHYSICALCARD',
-
-                    ]}
+                    keys={legendList}
                     indexBy="column"
                     margin={{ top: 50, right: 150, bottom: 50, left: 90 }}
                     padding={0.35}
                     valueScale={{ type: 'linear' }}
                     indexScale={{ type: 'band', round: true }}
-                    colors={{ scheme: 'nivo' }}
+                    colors={{ scheme: 'set3' }}
                     min-width={0}
                     defs={[
                         {
@@ -228,15 +238,7 @@ const BarChart = (props) => {
                     enableLabel={false}
                     labelSkipWidth={7}
                     labelSkipHeight={12}
-                    labelTextColor={{
-                        from: 'color',
-                        modifiers: [
-                            [
-                                'darker',
-                                1.6
-                            ]
-                        ]
-                    }}
+                    labelTextColor="#090b0e"
                     legends={[
                         {
                             dataFrom: 'keys',
@@ -261,6 +263,13 @@ const BarChart = (props) => {
                             ]
                         }
                     ]}
+                    tooltip={(item) => {
+                        return (
+                            <div style={{ background: colors.blue[800], padding: '6px 30px' }}>
+                                <div>{item.value}</div>
+                            </div>
+                        )
+                    }}
                     role="application"
                     isFocusable={true}
                     ariaLabel="Nivo bar chart demo"

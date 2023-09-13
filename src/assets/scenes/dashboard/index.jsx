@@ -10,11 +10,13 @@ import onDownload from "../../../components/downloadPage";
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import { useEffect, useState } from 'react';
 import { Grid } from "@mui/material";
+import { usePDF } from 'react-to-pdf';
 
 // https://raox6sjwhzkfl26hyiiwgcpaem0wbxsh.lambda-url.us-east-1.on.aws/
 const DashBoard = (props) => {
     const theme = useTheme();
     const colors = colorTokens(theme.palette.mode);
+    const { toPDF, targetRef } = usePDF({ filename: `MIT Dashboard - ${props.endPoint}` });
     const [responseData, setResponseData] = useState('');
 
     useEffect(() => {
@@ -44,7 +46,7 @@ const DashBoard = (props) => {
                         <Box >
                             <Button
                                 sx={{ backgroundColor: colors.gray[700], color: colors.gray[100], fontSize: "14px", fontWeight: "bold", padding: "10px 20px" }}
-                                onClick={onDownload}>
+                                onClick={() => toPDF()}>
                                 <DownloadOutlinedIcon sx={{ mr: "10px" }} />
                                 Download
                             </Button>
@@ -52,7 +54,7 @@ const DashBoard = (props) => {
                     </Grid>
                 </Grid>
             </Box>
-            <Box gap="20px">
+            <Box gap="20px" ref={targetRef}>
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                     <Grid item xs={12} sm={4} md={3}>
                         <Box
@@ -123,7 +125,7 @@ const DashBoard = (props) => {
                                 </Box>
                             </Box>
                             <Box height="250px" mt="20px">
-                                <PieChart data={responseData} displayAll={true} watchPhone={false} mobileCard={false} makePie={false} arcLabel={true} />
+                                <PieChart data={responseData} displayAll={true} watchPhone={false} mobileCard={false} makePie={false} arcLabel={false} />
                             </Box>
                         </Box>
                     </Grid>
