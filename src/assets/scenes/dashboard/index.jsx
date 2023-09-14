@@ -125,7 +125,7 @@ const DashBoard = (props) => {
                                 </Box>
                             </Box>
                             <Box height="250px" mt="20px">
-                                <PieChart data={responseData} displayAll={true} watchPhone={false} mobileCard={false} makePie={false} arcLabel={false} />
+                                <PieChart data={responseData} displayAll={true} watchPhone={false} mobileCard={false} makePie={false} arcLabel={true} />
                             </Box>
                         </Box>
                     </Grid>
