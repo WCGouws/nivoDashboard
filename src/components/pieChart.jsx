@@ -130,7 +130,7 @@ const PieChart = (props) => {
                         translateX: 80,
                         translateY: 10,
                         itemsSpacing: 4,
-                        itemWidth: 200,
+                        itemWidth: 150,
                         itemHeight: 20,
                         itemTextColor: colors.lightGray[600],
                         itemDirection: 'left-to-right',
