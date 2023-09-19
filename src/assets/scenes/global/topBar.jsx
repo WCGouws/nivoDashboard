@@ -44,7 +44,7 @@ const TopBar = () => {
                         alt="profile-user"
                         width="100px"
                         height="50px"
-                        src={`https://www.logo.wine/a/logo/Massachusetts_Institute_of_Technology/Massachusetts_Institute_of_Technology-Logo.wine.svg`}
+                        src="./MIT_logo.svg"
                         style={{ cursor: "pointer", borderRadius: "50%" }}
                     />
                 </Box>
