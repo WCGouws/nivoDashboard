@@ -11,7 +11,7 @@ function App() {
 
   return (
     <>
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         <ColorModeContext.Provider value={colorMode}>
           <ThemeProvider theme={theme}>
             <CssBaseline />

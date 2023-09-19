@@ -32,7 +32,7 @@ const DashBoard = (props) => {
 
 
   return (
-    <Box m="20px" >
+    <Box p="80px" pt="0px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Grid container spacing={{ xs: 2, sm: 2, md: 2 }} columns={{ md: 12 }}>
           <Grid item xs={12} sm={6} md={6}>
