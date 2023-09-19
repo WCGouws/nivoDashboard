@@ -2,8 +2,8 @@
 
 const onDownload = () => {
     const link = document.createElement("a");
-    link.download = `download.pdf`;
-    link.href = "./download.pdf";
+    link.download = `download.html`;
+    link.href = "./download.html";
     link.click();
 }
 
