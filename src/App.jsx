@@ -2,7 +2,6 @@ import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import TopBar from './assets/scenes/global/topBar';
-import SideBar from './assets/scenes/global/sideBar';
 import DashBoard from './assets/scenes/dashboard';
 import { Grid } from '@mui/material';
 
@@ -17,7 +16,6 @@ function App() {
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <div className='app'>
-              <SideBar />
               <main className='content'><TopBar />
                 <Routes>
                   <Route path='/' element={<Navigate to="/all" />} />
