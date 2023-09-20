@@ -35,7 +35,7 @@ const TopBar = () => {
         <Box
             display="flex"
             justifyContent="space-between"
-            p={2}
+            p={8}
             height="10%"
         >
             <Box mb="25px">
