@@ -29,7 +29,6 @@ const DashBoard = (props) => {
     }
     APICall()
     const refresh = setInterval(async () => {
-      console.log("refresh")
       APICall()
     }, 60000);
 
