@@ -1,7 +1,6 @@
 import { useTheme } from "@mui/material";
 import { ResponsiveLine } from '@nivo/line'
 import { colorTokens } from "../theme";
-import { lineMockData as data } from "../data/mockData";
 import { useEffect, useState } from "react";
 
 const LineChart = (props) => {

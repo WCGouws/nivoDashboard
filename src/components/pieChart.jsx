@@ -1,7 +1,6 @@
 import { Box, useTheme } from "@mui/material";
 import { ResponsivePie } from '@nivo/pie'
 import { colorTokens } from "../theme";
-import { PieMockData as mockData } from "../data/mockData";
 import { useEffect, useState } from "react";
 
 const PieChart = (props) => {
