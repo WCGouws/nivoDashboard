@@ -28,6 +28,12 @@ const DashBoard = (props) => {
       setResponseData(data);
     }
     APICall()
+    const refresh = setInterval(async () => {
+      console.log("refresh")
+      APICall()
+    }, 60000);
+
+    return () => clearInterval(refresh)
   }, [props.endPoint])
 
 
