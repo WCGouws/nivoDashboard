@@ -1,15 +1,14 @@
-import { Box, IconButton, useTheme, Typography } from "@mui/material";
+import { Box, IconButton, useTheme, Typography, useMediaQuery } from "@mui/material";
 import { useContext, useState } from "react";
 import { ColorModeContext, colorTokens } from "../../../theme";
 import { MenuItem } from "react-pro-sidebar";
-import InputBase from "@mui/material/InputBase";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import SearchIcon from "@mui/icons-material/Search";
 import HomeoutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleoutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import PersonoutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { Link } from "react-router-dom";
+import DrawerComponent from "../../../components/drawer";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
     const theme = useTheme();
@@ -28,8 +27,7 @@ const TopBar = () => {
     const theme = useTheme();
     const colors = colorTokens(theme.palette.mode);
     const colorMode = useContext(ColorModeContext);
-    const [isCollapsed, setIsCollapsed] = useState(false);
-    const [selected, setSelected] = useState("dashBoard");
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
     return (
         <Box
@@ -49,7 +47,8 @@ const TopBar = () => {
                     />
                 </Box>
             </Box>
-            <Box display="flex" justifyContent="space-between" p={2}>
+            {isMobile ? (<DrawerComponent />
+            ) : (<Box display="flex" justifyContent="space-between" p={2}>
                 <IconButton component={Link} to="/all">
                     <HomeoutlinedIcon />
                     Home
@@ -66,7 +65,8 @@ const TopBar = () => {
                     <PersonoutlinedIcon />
                     Affiliates
                 </IconButton>
-            </Box>
+            </Box>)}
+
 
             <Box display="flex">
                 <IconButton onClick={colorMode.toggleColorMode}>
