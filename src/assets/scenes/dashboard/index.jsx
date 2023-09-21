@@ -20,12 +20,13 @@ const DashBoard = (props) => {
 
     async function callAPI() {
       const baseURL = "http://localhost:3000/api/v1"
-      const [allDevices, studentDevices, employeeDevices, affiliateDevices, allDevicesOT] = await Promise.all([
+      const [allDevices, studentDevices, employeeDevices, affiliateDevices, allDevicesOT, expiringDevices] = await Promise.all([
         JSON.parse(await (await fetch(`${baseURL}/devices/all`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/student`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/employee`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/affiliate`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/devices/mob_cred_ot`)).text()),
+        JSON.parse(await (await fetch(`${baseURL}/devices/expiring_cards`)).text()),
       ])
 
       setResponseData({
@@ -34,6 +35,7 @@ const DashBoard = (props) => {
         "employee": employeeDevices,
         "affiliate": affiliateDevices,
         "devicesOverTime": allDevicesOT, // Note that this is filterable by month/year as well, but requires a different endpoint
+        "expiringDevices": expiringDevices
       })
 
     }
