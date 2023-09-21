@@ -111,7 +111,7 @@ const BarChart = (props) => {
       {barData ?
         <ResponsiveBar
 
-          data={barData ? barData : data}
+          data={barData}
           layout={props.makeHorizontal ? "horizontal" : "vertical"}
           theme={{
             axis: {

@@ -40,7 +40,7 @@ const DashBoard = (props) => {
 
     callAPI()
 
-  }, [])
+  }, [props.endPoint])
 
 
   return (

@@ -46,7 +46,7 @@ const LineChart = (props) => {
   }, [props.data])
   return (
     <ResponsiveLine
-      data={lineData ? lineData : data}
+      data={lineData && lineData} // Remove if loading circle gets implemented
       theme={{
         axis: {
           domain: {
