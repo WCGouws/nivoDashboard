@@ -1,7 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import { colorTokens } from "../theme";
-import { barMockData as data } from "../data/mockData";
+import { useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 
 const BarChart = (props) => {
