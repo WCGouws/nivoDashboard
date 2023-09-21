@@ -11,7 +11,7 @@ function App() {
 
   return (
     <>
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         <ColorModeContext.Provider value={colorMode}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -20,9 +20,9 @@ function App() {
                 <Routes>
                   <Route path='/' element={<Navigate to="/all" />} />
                   <Route path="/all" element={<DashBoard endPoint={"all"} />} />
-                  <Route path="/students" element={<DashBoard endPoint={"students"} />} />
-                  <Route path="/staff" element={<DashBoard endPoint={"staff"} />} />
-                  <Route path="/affiliates" element={<DashBoard endPoint={"affiliates"} />} />
+                  <Route path="/students" element={<DashBoard endPoint={"student"} />} />
+                  <Route path="/employees" element={<DashBoard endPoint={"employee"} />} />
+                  <Route path="/affiliates" element={<DashBoard endPoint={"affiliate"} />} />
                 </Routes>
               </main>
             </div>
