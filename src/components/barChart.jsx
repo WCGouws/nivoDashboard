@@ -1,19 +1,13 @@
 import { Box, useTheme } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import { colorTokens } from "../theme";
-import { useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 
 const BarChart = (props) => {
   const theme = useTheme();
   const colors = colorTokens(theme.palette.mode);
   const [barData, setBarData] = useState('');
-  const [legendList, setLegendList] = useState([
-    'iphone',
-    'iwatch',
-    'android',
-    'physical_card',
-  ])
+  const [legendList, setLegendList] = useState('')
 
   const displayReference = {
     "physical_card": {
@@ -29,7 +23,7 @@ const BarChart = (props) => {
       color: "hsl(125, 70%, 50%)"
     },
     "iwatch": {
-      displayName: "Apple Watch",
+      displayName: "iWatch",
       color: "hsl(332, 70%, 50%)"
     },
   }
@@ -51,8 +45,8 @@ const BarChart = (props) => {
           let miniObj = { "column": patronGroup }
           for (let device in patronGroupsOnly[patronGroup]) {
             if (device !== "devices_total") {
-              miniObj[device] = patronGroupsOnly[patronGroup][device]
-              miniObj[`${device}Color`] = displayReference[device]["color"]
+              miniObj[displayReference[device]["displayName"]] = patronGroupsOnly[patronGroup][device]
+              miniObj[`${displayReference[device]["displayName"]}Color`] = displayReference[device]["color"]
             }
           }
           refinedData.push(miniObj)
@@ -65,14 +59,14 @@ const BarChart = (props) => {
         let phoneTotal = props.data[props.endPoint]["iphone"]
         refinedData.push(
           {
-            "column": "iwatch",
-            "iwatch": watchTotal,
-            "iwatchColor": "hsl(332, 70%, 50%)"
+            "column": "iWatch",
+            "iWatch": watchTotal,
+            "iWatchColor": "hsl(332, 70%, 50%)"
           },
           {
-            "column": "iphone",
-            "iphone": phoneTotal,
-            "iphoneColor": "hsl(125, 70%, 50%)"
+            "column": "iPhone",
+            "iPhone": phoneTotal,
+            "iPhoneColor": "hsl(125, 70%, 50%)"
           }
         )
         setBarData(refinedData)
@@ -100,8 +94,15 @@ const BarChart = (props) => {
   useEffect(() => {
     if (props.watchPhone) {
       setLegendList([
-        'iphone',
-        'iwatch'
+        'iPhone',
+        'iWatch'
+      ])
+    } else {
+      setLegendList([
+        'iPhone',
+        'iWatch',
+        'Android',
+        'Physical Card',
       ])
     }
   }, [])
