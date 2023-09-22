@@ -15,24 +15,33 @@ const DashBoard = (props) => {
   const { toPDF, targetRef } = usePDF({ filename: `MIT Dashboard - ${props.endPoint}` });
   const [responseData, setResponseData] = useState('');
 
+  // CM Server integration
   useEffect(() => {
-    async function APICall() {
-      // let response = await fetch(`http://localhost:3001/${props.endPoint}`);
-      let response = await fetch(`https://raox6sjwhzkfl26hyiiwgcpaem0wbxsh.lambda-url.us-east-1.on.aws/?fetchGroup=${props.endPoint}`)
-      let data = await response.text()
-      data = await JSON.parse(data)
-      data = data.body
-      for (let item in data) {
-        data[item] = parseInt(data[item])
-      }
-      setResponseData(data);
-    }
-    APICall()
-    const refresh = setInterval(async () => {
-      APICall()
-    }, 60000);
 
-    return () => clearInterval(refresh)
+    async function callAPI() {
+      const baseURL = "http://localhost:3000/api/v1"
+      const [allDevices, studentDevices, employeeDevices, affiliateDevices, allDevicesOT, expiringDevices] = await Promise.all([
+        JSON.parse(await (await fetch(`${baseURL}/devices/all`)).text()),
+        JSON.parse(await (await fetch(`${baseURL}/student`)).text()),
+        JSON.parse(await (await fetch(`${baseURL}/employee`)).text()),
+        JSON.parse(await (await fetch(`${baseURL}/affiliate`)).text()),
+        JSON.parse(await (await fetch(`${baseURL}/devices/mob_cred_ot`)).text()),
+        JSON.parse(await (await fetch(`${baseURL}/devices/expiring_cards`)).text()),
+      ])
+
+      setResponseData({
+        "all": allDevices,
+        "student": studentDevices,
+        "employee": employeeDevices,
+        "affiliate": affiliateDevices,
+        "devicesOverTime": allDevicesOT, // Note that this is filterable by month/year as well, but requires a different endpoint
+        "expiringDevices": expiringDevices
+      })
+
+    }
+
+    callAPI()
+
   }, [props.endPoint])
 
 
@@ -67,7 +76,7 @@ const DashBoard = (props) => {
             >
               <StatBox
                 tilte="Total Patrons:"
-                amount={responseData["PHYSICALCARD"] + responseData["ANDROID"] + responseData["APPLEWATCH"] + responseData["IPHONE"]}
+                amount={responseData && responseData[props.endPoint]["physical_card"] + responseData[props.endPoint]["android"] + responseData[props.endPoint]["iwatch"] + responseData[props.endPoint]["iphone"]}
               />
             </Box>
           </Grid>
@@ -79,7 +88,7 @@ const DashBoard = (props) => {
               padding={2}>
               <StatBox
                 tilte="Total Devices:"
-                amount={responseData["ANDROID"] + responseData["IPHONE"] + responseData["APPLEWATCH"]}
+                amount={responseData && responseData[props.endPoint]["android"] + responseData[props.endPoint]["iwatch"] + responseData[props.endPoint]["iphone"]}
               />
             </Box>
           </Grid>
@@ -91,7 +100,7 @@ const DashBoard = (props) => {
               padding={2}>
               <StatBox
                 tilte="Total Cards:"
-                amount={responseData["PHYSICALCARD"]}
+                amount={responseData && responseData[props.endPoint]["physical_card"]}
               />
             </Box>
           </Grid>
@@ -103,7 +112,7 @@ const DashBoard = (props) => {
               padding={2}>
               <StatBox
                 tilte="Total Mobiles:"
-                amount={responseData["ANDROID"] + responseData["IPHONE"]}
+                amount={responseData && responseData[props.endPoint]["android"] + responseData[props.endPoint]["iphone"]}
               />
             </Box>
           </Grid>
@@ -125,7 +134,7 @@ const DashBoard = (props) => {
                 </Box>
               </Box>
               <Box height="250px" mt="20px">
-                <PieChart data={responseData} displayAll={true} watchPhone={false} mobileCard={false} makePie={false} arcLabel={true} />
+                <PieChart data={responseData} displayAll={true} watchPhone={false} mobileCard={false} makePie={false} arcLabel={true} endPoint={props.endPoint} />
               </Box>
             </Box>
           </Grid>
@@ -148,9 +157,9 @@ const DashBoard = (props) => {
               </Box>
               <Box height="250px" mt="20px">
                 {props.endPoint === "all" ?
-                  <BarChart data={responseData} displayAll={true} makeHorizontal={false} />
+                  <BarChart data={responseData} displayAll={true} makeHorizontal={false} endPoint={props.endPoint} />
                   :
-                  <BarChart data={responseData} displayAll={false} makeHorizontal={false} />
+                  <BarChart data={responseData} displayAll={false} makeHorizontal={false} endPoint={props.endPoint} />
                 }
               </Box>
             </Box>
@@ -174,7 +183,7 @@ const DashBoard = (props) => {
               </Box>
               <StatBox
                 tilte="Applewatch & Iphone:"
-                amount={responseData["APPLEWATCH"] + responseData["IPHONE"]}
+                amount={responseData && responseData[props.endPoint]["iwatch"] + responseData[props.endPoint]["iphone"]}
               />
             </Box>
           </Grid>
@@ -197,7 +206,7 @@ const DashBoard = (props) => {
               </Box>
               <StatBox
                 tilte="Mobile & Card:"
-                amount={responseData["ANDROID"] + responseData["IPHONE"] + responseData["PHYSICALCARD"]}
+                amount={responseData && responseData[props.endPoint]["android"] + responseData[props.endPoint]["iphone"] + responseData[props.endPoint]["physical_card"]}
               />
             </Box>
           </Grid>
@@ -219,7 +228,7 @@ const DashBoard = (props) => {
                 </Box>
               </Box>
               <Box height="250px" mt="20px">
-                <BarChart data={responseData} displayAll={false} watchPhone={true} mobileCard={false} makeHorizontal={true} />
+                <BarChart data={responseData} displayAll={false} watchPhone={true} mobileCard={false} makeHorizontal={true} endPoint={props.endPoint} />
               </Box>
             </Box>
           </Grid>
@@ -241,7 +250,7 @@ const DashBoard = (props) => {
                 </Box>
               </Box>
               <Box height="250px" mt="20px">
-                <PieChart data={responseData} displayAll={false} watchPhone={false} mobileCard={true} makePie={true} arcLabel={true} />
+                <PieChart data={responseData} displayAll={false} watchPhone={false} mobileCard={true} makePie={true} arcLabel={true} endPoint={props.endPoint} />
               </Box>
             </Box>
           </Grid>

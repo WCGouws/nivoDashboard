@@ -1,7 +1,6 @@
 import { Box, useTheme } from "@mui/material";
 import { ResponsivePie } from '@nivo/pie'
 import { colorTokens } from "../theme";
-import { PieMockData as mockData } from "../data/mockData";
 import { useEffect, useState } from "react";
 
 const PieChart = (props) => {
@@ -10,19 +9,19 @@ const PieChart = (props) => {
   const [pieData, setPieData] = useState(false)
 
   const displayReference = {
-    "PHYSICALCARD": {
+    "physical_card": {
       displayName: "Physical Card",
       color: "hsl(318, 70%, 50%)"
     },
-    "ANDROID": {
+    "android": {
       displayName: "Android",
       color: "hsl(125, 70%, 50%)"
     },
-    "IPHONE": {
+    "iphone": {
       displayName: "iPhone",
       color: "hsl(205, 70%, 50%)"
     },
-    "APPLEWATCH": {
+    "iwatch": {
       displayName: "Apple Watch",
       color: "hsl(56, 70%, 50%)"
     },
@@ -32,19 +31,19 @@ const PieChart = (props) => {
 
     if (props.data && props.data !== "" && props.displayAll) {
       let refineData = [];
-      for (let item in props.data) {
+      for (let item in displayReference) {
         refineData.push({
           "id": item,
           "label": displayReference[item]["displayName"],
-          "value": parseInt(props.data[item]),
+          "value": parseInt(props.data[props.endPoint][item]),
           "color": displayReference[item]["color"]
         })
       }
       setPieData(refineData)
     } else if (props.data && props.data !== "" && props.mobileCard) {
       let refineData = [];
-      let mobileTotal = props.data["IPHONE"] + props.data["ANDROID"]
-      let cardTotal = props.data["PHYSICALCARD"]
+      let mobileTotal = props.data[props.endPoint]["iphone"] + props.data[props.endPoint]["android"]
+      let cardTotal = props.data[props.endPoint]["physical_card"]
       refineData.push(
         {
           "id": "Mobile",

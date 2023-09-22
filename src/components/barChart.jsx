@@ -1,7 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import { colorTokens } from "../theme";
-import { barMockData as data } from "../data/mockData";
+import { useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 
 const BarChart = (props) => {
@@ -9,102 +9,82 @@ const BarChart = (props) => {
   const colors = colorTokens(theme.palette.mode);
   const [barData, setBarData] = useState('');
   const [legendList, setLegendList] = useState([
-    'IPHONE',
-    'APPLEWATCH',
-    'ANDROID',
-    'PHYSICALCARD',
+    'iphone',
+    'iwatch',
+    'android',
+    'physical_card',
   ])
 
   const displayReference = {
-    "PHYSICALCARD": {
+    "physical_card": {
       displayName: "Physical Card",
       color: "hsl(277, 70%, 50%)"
     },
-    "ANDROID": {
+    "android": {
       displayName: "Android",
       color: "hsl(314, 70%, 50%)"
     },
-    "IPHONE": {
+    "iphone": {
       displayName: "iPhone",
       color: "hsl(125, 70%, 50%)"
     },
-    "APPLEWATCH": {
+    "iwatch": {
       displayName: "Apple Watch",
       color: "hsl(332, 70%, 50%)"
     },
-  }
-
-  async function fetchSeparates() {
-    const [studentsRes, staffRes, affiliatesRes] = await Promise.all([
-      fetch("https://raox6sjwhzkfl26hyiiwgcpaem0wbxsh.lambda-url.us-east-1.on.aws/?fetchGroup=students"),
-      fetch("https://raox6sjwhzkfl26hyiiwgcpaem0wbxsh.lambda-url.us-east-1.on.aws/?fetchGroup=staff"),
-      fetch("https://raox6sjwhzkfl26hyiiwgcpaem0wbxsh.lambda-url.us-east-1.on.aws/?fetchGroup=affiliates")
-
-    ])
-    // const [studentsRes, staffRes, affiliatesRes] = await Promise.all([
-    //     fetch("http://localhost:3001/students"),
-    //     fetch("http://localhost:3001/staff"),
-    //     fetch("http://localhost:3001/affiliates")
-    // ])
-
-    let students = await studentsRes.text();
-    let staff = await staffRes.text();
-    let affiliates = await affiliatesRes.text();
-
-    students = await JSON.parse(students)
-    staff = await JSON.parse(staff)
-    affiliates = await JSON.parse(affiliates)
-
-    const response = {
-      "Students": students.body,
-      "Staff": staff.body,
-      "Affiliates": affiliates.body
-    }
-
-    return response;
   }
 
   useEffect(() => {
 
     async function handleDataRestructure() {
       if (props.displayAll) {
-        const seperates = await fetchSeparates();
+        // const seperates = await fetchSeparates();
+        const patronGroupsOnly = {
+          "Student": props.data["student"],
+          "Employee": props.data["employee"],
+          "Affiliate": props.data["affiliate"],
+        }
 
         let refinedData = [];
 
-        for (let patron in seperates) {
-          let miniObj = { "column": patron }
-          for (let device in seperates[patron]) {
-            miniObj[device] = seperates[patron][device]
-            miniObj[`${device}Color`] = displayReference[device]["color"]
+        for (let patronGroup in patronGroupsOnly) {
+          let miniObj = { "column": patronGroup }
+          for (let device in patronGroupsOnly[patronGroup]) {
+            if (device !== "devices_total") {
+              miniObj[device] = patronGroupsOnly[patronGroup][device]
+              miniObj[`${device}Color`] = displayReference[device]["color"]
+            }
           }
           refinedData.push(miniObj)
         }
         setBarData(refinedData)
+
       } else if (props.data && props.data !== "" && props.watchPhone) {
         let refinedData = [];
-        let watchTotal = props.data["APPLEWATCH"]
-        let phoneTotal = props.data["IPHONE"]
+        let watchTotal = props.data[props.endPoint]["iwatch"]
+        let phoneTotal = props.data[props.endPoint]["iphone"]
         refinedData.push(
           {
-            "column": "APPLEWATCH",
-            "APPLEWATCH": watchTotal,
-            "APPLEWATCHColor": "hsl(332, 70%, 50%)"
+            "column": "iwatch",
+            "iwatch": watchTotal,
+            "iwatchColor": "hsl(332, 70%, 50%)"
           },
           {
-            "column": "IPHONE",
-            "IPHONE": phoneTotal,
-            "IPHONEColor": "hsl(125, 70%, 50%)"
+            "column": "iphone",
+            "iphone": phoneTotal,
+            "iphoneColor": "hsl(125, 70%, 50%)"
           }
         )
         setBarData(refinedData)
+
       } else {
+
         if (props.data && props.data !== "") {
           let refinedData = [];
-          for (let device in props.data) {
+          for (let device in props.data[props.endPoint]) {
             refinedData.push({
               "column": device,
-              [device]: props.data[device],
+              [device]: props.data[props.endPoint][device],
               [`${device}Color`]: displayReference[device]["color"]
             })
           }
@@ -120,12 +100,11 @@ const BarChart = (props) => {
   useEffect(() => {
     if (props.watchPhone) {
       setLegendList([
-        'IPHONE',
-        'APPLEWATCH'
+        'iphone',
+        'iwatch'
       ])
     }
   }, [])
-
 
   return (
     <>

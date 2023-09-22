@@ -58,9 +58,9 @@ const TopBar = () => {
                     <PeopleoutlinedIcon />
                     Students
                 </IconButton>
-                <IconButton component={Link} to="/staff">
+                <IconButton component={Link} to="/employees">
                     <PersonoutlinedIcon />
-                    Staff
+                    Employees
                 </IconButton>
                 <IconButton component={Link} to="/affiliates">
                     <PersonoutlinedIcon />
