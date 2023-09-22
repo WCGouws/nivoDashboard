@@ -78,7 +78,7 @@ const BarChart = (props) => {
       for (let device in props.data[props.endPoint]) {
         if (device !== "devices_total") {
           refinedData.push({
-            "column": device,
+            "column": displayReference[device]["displayName"],
             [displayReference[device]["displayName"]]: props.data[props.endPoint][device],
             [`${displayReference[device]["displayName"]}Color`]: displayReference[device]["color"]
           })
