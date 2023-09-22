@@ -28,30 +28,29 @@ const BarChart = (props) => {
     },
   }
 
-  useEffect(() => {
+  function handleDataRestructure() {
+    if (props.displayAll) {
+      // const seperates = await fetchSeparates();
+      const patronGroupsOnly = {
+        "Student": props.data["student"],
+        "Employee": props.data["employee"],
+        "Affiliate": props.data["affiliate"],
+      }
 
-    async function handleDataRestructure() {
-      if (props.displayAll) {
-        // const seperates = await fetchSeparates();
-        const patronGroupsOnly = {
-          "Student": props.data["student"],
-          "Employee": props.data["employee"],
-          "Affiliate": props.data["affiliate"],
-        }
+      let refinedData = [];
 
-        let refinedData = [];
-
-        for (let patronGroup in patronGroupsOnly) {
-          let miniObj = { "column": patronGroup }
-          for (let device in patronGroupsOnly[patronGroup]) {
-            if (device !== "devices_total") {
-              miniObj[displayReference[device]["displayName"]] = patronGroupsOnly[patronGroup][device]
-              miniObj[`${displayReference[device]["displayName"]}Color`] = displayReference[device]["color"]
-            }
+      for (let patronGroup in patronGroupsOnly) {
+        let miniObj = { "column": patronGroup }
+        for (let device in patronGroupsOnly[patronGroup]) {
+          if (device !== "devices_total") {
+            miniObj[displayReference[device]["displayName"]] = patronGroupsOnly[patronGroup][device]
+            miniObj[`${displayReference[device]["displayName"]}Color`] = displayReference[device]["color"]
           }
-          refinedData.push(miniObj)
         }
-        setBarData(refinedData)
+      }
+      refinedData.push(miniObj)
+    }
+    setBarData(refinedData)
 
       } else if (props.data && props.data !== "" && props.watchPhone) {
         let refinedData = [];
@@ -71,24 +70,26 @@ const BarChart = (props) => {
         )
         setBarData(refinedData)
 
-      } else {
+    } else {
 
-        if (props.data && props.data !== "") {
-          let refinedData = [];
-          for (let device in props.data[props.endPoint]) {
+      if (props.data && props.data !== "") {
+        let refinedData = [];
+        for (let device in props.data[props.endPoint]) {
+          if (device !== "devices_total") {
             refinedData.push({
               "column": device,
               [device]: props.data[props.endPoint][device],
               [`${device}Color`]: displayReference[device]["color"]
             })
           }
-          setBarData(refinedData)
         }
+        setBarData(refinedData)
       }
     }
+  }
 
+  useEffect(() => {
     handleDataRestructure()
-
   }, [props.data])
 
   useEffect(() => {
