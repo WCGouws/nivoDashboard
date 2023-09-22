@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Drawer, List, ListItem, IconButton } from "@mui/material";
+import { Drawer, List, ListItem, IconButton, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
 import PeopleoutlinedIcon from "@mui/icons-material/PeopleOutlined";
@@ -14,6 +14,19 @@ function DrawerComponent() {
                 onClose={() => setOpenDrawer(false)}
             >
                 <List>
+                    <ListItem onClick={() => setOpenDrawer(false)}>
+                        <Box mb="25px">
+                            <Box display="flex">
+                                <img
+                                    alt="profile-user"
+                                    width="100px"
+                                    height="50px"
+                                    src="./MIT_logo.svg"
+                                    style={{ cursor: "pointer", borderRadius: "50%" }}
+                                />
+                            </Box>
+                        </Box>
+                    </ListItem>
                     <ListItem onClick={() => setOpenDrawer(false)}>
                         <IconButton component={Link} to="/all">
                             <HomeoutlinedIcon />Home</IconButton>

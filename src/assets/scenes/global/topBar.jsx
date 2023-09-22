@@ -36,36 +36,38 @@ const TopBar = () => {
             p={8}
             height="10%"
         >
-            <Box mb="25px">
-                <Box display="flex" justifyContent="center" alignItems="center">
-                    <img
-                        alt="profile-user"
-                        width="100px"
-                        height="50px"
-                        src="./MIT_logo.svg"
-                        style={{ cursor: "pointer", borderRadius: "50%" }}
-                    />
+            {isMobile ? (<DrawerComponent />)
+                : (<Box display="flex" justifyContent="space-between" p={2}>
+                    <Box mb="25px">
+                        <Box display="flex" justifyContent="center" alignItems="center">
+                            <img
+                                alt="profile-user"
+                                width="100px"
+                                height="50px"
+                                src="./MIT_logo.svg"
+                                style={{ cursor: "pointer", borderRadius: "50%" }}
+                            />
+                        </Box>
+                    </Box>
+                    <IconButton component={Link} to="/all">
+                        <HomeoutlinedIcon />
+                        Home
+                    </IconButton>
+                    <IconButton component={Link} to="/students">
+                        <PeopleoutlinedIcon />
+                        Students
+                    </IconButton>
+                    <IconButton component={Link} to="/employees">
+                        <PersonoutlinedIcon />
+                        Employees
+                    </IconButton>
+                    <IconButton component={Link} to="/affiliates">
+                        <PersonoutlinedIcon />
+                        Affiliates
+                    </IconButton>
                 </Box>
-            </Box>
-            {isMobile ? (<DrawerComponent />
-            ) : (<Box display="flex" justifyContent="space-between" p={2}>
-                <IconButton component={Link} to="/all">
-                    <HomeoutlinedIcon />
-                    Home
-                </IconButton>
-                <IconButton component={Link} to="/students">
-                    <PeopleoutlinedIcon />
-                    Students
-                </IconButton>
-                <IconButton component={Link} to="/employees">
-                    <PersonoutlinedIcon />
-                    Employees
-                </IconButton>
-                <IconButton component={Link} to="/affiliates">
-                    <PersonoutlinedIcon />
-                    Affiliates
-                </IconButton>
-            </Box>)}
+                )
+            }
 
 
             <Box display="flex">
