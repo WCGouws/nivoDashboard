@@ -264,7 +264,8 @@ const DashBoard = (props) => {
               alignItems="center"
               justifyContent="center"
               gridColumn="span 3"
-              padding={2}>
+              padding={2}
+              pb={10}>
               <Box
                 mt="25px"
                 p="0 30px"
