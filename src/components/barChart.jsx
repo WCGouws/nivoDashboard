@@ -113,28 +113,14 @@ return (
   <>
     {barData ?
       <ResponsiveBar
-          data={barData}
-          layout={props.makeHorizontal ? "horizontal" : "vertical"}
-          theme={{
-            axis: {
-              domain: {
-                line: {
-                  stroke: colors.indigo[700]
-                }
-              },
-              legend: {
-                text: {
-                  fill: colors.lightGray[700]
-                }
-              },
-              ticks: {
-                line: {
-                  stroke: colors.lightGray[700],
-                  strokeWidth: 1
-                },
-                text: {
-                  fill: colors.lightGray[700]
-                }
+
+        data={barData ? barData : data}
+        layout={props.makeHorizontal ? "horizontal" : "vertical"}
+        theme={{
+          axis: {
+            domain: {
+              line: {
+                stroke: colors.indigo[700]
               }
             },
             legend: {
