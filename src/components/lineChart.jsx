@@ -13,7 +13,7 @@ const LineChart = (props) => {
     "Year": false
   })
   const [currentFilter, setCurrentFilter] = useState("Day")
-  const [dayRange, setDayRange] = useState('');
+  const [dayRange, setDayRange] = useState(-30);
 
   function handleDayRangeChange(e) {
     setDayRange(e.target.value);
@@ -139,9 +139,6 @@ const LineChart = (props) => {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: -90,
-            legend: 'Date',
-            legendOffset: 34,
-            legendPosition: 'middle'
           }}
           axisLeft={{
             tickSize: 5,
@@ -152,6 +149,7 @@ const LineChart = (props) => {
             legendPosition: 'middle'
           }}
           enableGridX={false}
+          // enableGridY={false}
           lineWidth={2}
           pointColor={{ theme: 'background' }}
           pointBorderWidth={1}
@@ -187,7 +185,7 @@ const LineChart = (props) => {
           tooltip={(item) => {
             return (
               <div style={{ background: colors.blue[800], padding: '6px 30px' }}>
-                <div>{item.value}</div>
+                <div>{item.point.data.y}</div>
               </div>
             )
           }}
