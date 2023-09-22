@@ -8,6 +8,7 @@ import StatBox from "../../../components/statBox";
 import { useEffect, useState } from 'react';
 import { Grid } from "@mui/material";
 import { usePDF } from 'react-to-pdf';
+import LineChart from "../../../components/lineChart";
 
 const DashBoard = (props) => {
   const theme = useTheme();
@@ -20,12 +21,15 @@ const DashBoard = (props) => {
 
     async function callAPI() {
       const baseURL = "http://localhost:3000/api/v1"
-      const [allDevices, studentDevices, employeeDevices, affiliateDevices, allDevicesOT] = await Promise.all([
+      const [allDevices, studentDevices, employeeDevices, affiliateDevices, allDevicesOT, devicesOTYear, devicesOTMonth, expiringDevices] = await Promise.all([
         JSON.parse(await (await fetch(`${baseURL}/devices/all`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/student`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/employee`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/affiliate`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/devices/mob_cred_ot`)).text()),
+        JSON.parse(await (await fetch(`${baseURL}/devices/mob_cred_ot/year`)).text()),
+        JSON.parse(await (await fetch(`${baseURL}/devices/mob_cred_ot/month`)).text()),
+        JSON.parse(await (await fetch(`${baseURL}/devices/expiring_cards`)).text()),
       ])
 
       setResponseData({
@@ -33,9 +37,12 @@ const DashBoard = (props) => {
         "student": studentDevices,
         "employee": employeeDevices,
         "affiliate": affiliateDevices,
-        "devicesOverTime": allDevicesOT, // Note that this is filterable by month/year as well, but requires a different endpoint
+        "devicesOverDay": allDevicesOT,
+        "devicesOverYear": devicesOTYear,
+        "devicesOverMonth": devicesOTMonth,
+        "expiringDevices": expiringDevices
       })
-
+      
     }
 
     callAPI()
@@ -150,7 +157,7 @@ const DashBoard = (props) => {
                 alignItems="center"
               >
                 <Box>
-                  <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>All Devices per Patron group</Typography>
+                  <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>All Devices</Typography>
                 </Box>
               </Box>
               <Box height="250px" mt="20px">
@@ -249,6 +256,28 @@ const DashBoard = (props) => {
               </Box>
               <Box height="250px" mt="20px">
                 <PieChart data={responseData} displayAll={false} watchPhone={false} mobileCard={true} makePie={true} arcLabel={true} endPoint={props.endPoint} />
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
+            <Box backgroundColor={colors.black[700]}
+              alignItems="center"
+              justifyContent="center"
+              gridColumn="span 3"
+              padding={2}>
+              <Box
+                mt="25px"
+                p="0 30px"
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Box>
+                  <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>Credentials created over time</Typography>
+                </Box>
+              </Box>
+              <Box height="250px" mt="20px">
+                <LineChart data={responseData} arcLabel={true} endPoint={props.endPoint} />
               </Box>
             </Box>
           </Grid>

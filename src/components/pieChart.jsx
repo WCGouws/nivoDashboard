@@ -27,8 +27,7 @@ const PieChart = (props) => {
     },
   }
 
-  useEffect(() => {
-
+  function handleDataRestructure() {
     if (props.data && props.data !== "" && props.displayAll) {
       let refineData = [];
       for (let item in displayReference) {
@@ -41,10 +40,10 @@ const PieChart = (props) => {
       }
       setPieData(refineData)
     } else if (props.data && props.data !== "" && props.mobileCard) {
-      let refineData = [];
+      let refinedData = [];
       let mobileTotal = props.data[props.endPoint]["iphone"] + props.data[props.endPoint]["android"]
       let cardTotal = props.data[props.endPoint]["physical_card"]
-      refineData.push(
+      refinedData.push(
         {
           "id": "Mobile",
           "label": "Mobile",
@@ -58,8 +57,12 @@ const PieChart = (props) => {
           "color": "hsl(318, 70%, 50%)"
         })
 
-      setPieData(refineData)
+      setPieData(refinedData)
     }
+  }
+
+  useEffect(() => {
+    handleDataRestructure()
   }, [props.data])
 
   return (
