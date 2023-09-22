@@ -68,7 +68,7 @@ const PieChart = (props) => {
   return (
     <>
       {pieData ? <ResponsivePie
-        data={pieData ? pieData : mockData}
+        data={pieData}
         theme={{
           axis: {
             domain: {

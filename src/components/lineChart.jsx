@@ -61,6 +61,7 @@ const LineChart = (props) => {
   }, [props.data, currentFilter])
 
   return (
+
     <>
       <Box p="0 30px">
         <FormControlLabel name="Day" control={<Checkbox checked={displayFilter["Day"]}/>} label="Day" onClick={(e) => handleDisplaySwitch(e)} />
