@@ -39,7 +39,14 @@ const LineChart = (props) => {
         "color": "hsl(183, 100%, 50%)",
         "data": []
       }];
-      for (let date of props.data[`devicesOver${currentFilter}`]["mob_cred_ot"]) {
+      
+      // Reduce amount of data if we're displaying on a day-to-day basis, as it's too much for the line chart to handle
+      let OTData = props.data[`devicesOver${currentFilter}`]["mob_cred_ot"]
+      if (currentFilter === "Day") {
+        OTData = OTData.slice(-20)
+      }
+
+      for (let date of OTData) {
         refinedData[0].data.push({
           "x": date.date,
           "y": date.count

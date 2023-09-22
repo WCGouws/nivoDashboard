@@ -42,7 +42,7 @@ const DashBoard = (props) => {
         "devicesOverMonth": devicesOTMonth,
         "expiringDevices": expiringDevices
       })
-
+      
     }
 
     callAPI()
