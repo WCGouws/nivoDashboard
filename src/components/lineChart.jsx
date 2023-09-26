@@ -48,6 +48,13 @@ const LineChart = (props) => {
       let OTData = props.data[`devicesOver${currentFilter}`]["mob_cred_ot"]
       if (currentFilter === "Day") {
         OTData = OTData.slice(dayRange)
+        if (dayRange === -365) {
+          let stripped = []
+          for (let i = 0; i < OTData.length; i += 5) {
+            stripped.push(OTData[i]);
+          }
+          OTData = stripped;
+        }
       }
 
       for (let date of OTData) {
