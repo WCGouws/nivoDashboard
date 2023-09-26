@@ -2,6 +2,7 @@ import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { colorTokens } from "../../../theme";
 import Header from "../../../components/headers";
 import BarChart from "../../../components/barChart";
+import RadialBarChart from "../../../components/radialBarChart";
 import PieChart from "../../../components/pieChart";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import StatBox from "../../../components/statBox";
@@ -251,6 +252,28 @@ const DashBoard = (props) => {
               </Box>
               <Box height="250px" mt="20px">
                 <PieChart data={responseData} displayAll={false} watchPhone={false} mobileCard={true} makePie={true} arcLabel={true} endPoint={props.endPoint} />
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <Box backgroundColor={colors.black[700]}
+              alignItems="center"
+              justifyContent="center"
+              gridColumn="span 3"
+              padding={2}>
+              <Box
+                mt="25px"
+                p="0 30px"
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Box>
+                  <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>Cards that are expiring soon</Typography>
+                </Box>
+              </Box>
+              <Box height="250px" mt="20px">
+                  <RadialBarChart data={responseData} displayAll={true} makeHorizontal={false} endPoint={props.endPoint} />
               </Box>
             </Box>
           </Grid>

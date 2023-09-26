@@ -57,7 +57,7 @@ const BarChart = (props) => {
           }
           refinedData.push(miniObj)
         }
-        setBarData(refinedData)
+        ["lost_cards"].length
 
       } else if (props.data && props.data !== "" && props.watchPhone) {
         let refinedData = [];
