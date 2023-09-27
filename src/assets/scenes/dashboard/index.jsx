@@ -9,11 +9,7 @@ import { useEffect, useState } from 'react';
 import { Grid } from "@mui/material";
 import { usePDF } from 'react-to-pdf';
 import LineChart from "../../../components/lineChart";
-// xs, extra-small: 0px
-// sm, small: 600px
-// md, medium: 900px
-// lg, large: 1200px
-// xl, extra-large: 1536px
+
 const DashBoard = (props) => {
   const theme = useTheme();
   const colors = colorTokens(theme.palette.mode);
@@ -61,7 +57,7 @@ const DashBoard = (props) => {
 
   return (
     <Box p="35px" pt="0px" pr="12px">
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box display="flex" flexDirection="column" alignItems="stretch" justifyContent="space-between">
         <Grid container={isMobile ? false : true} spacing={{ xs: 12, sm: 12, md: 2 }} columns={{ xs: 12, sm: 12, md: 12 }}>
           <Grid item xs={isMobileSmall ? 12 : 6} sm={isMobile ? 12 : 6} md={isTablet ? 12 : 6}>
             <Header title="DASHBOARD" subtitle={`MIT Dashboard ${props.endPoint.charAt(0).toUpperCase() + props.endPoint.slice(1)}`} />
@@ -71,7 +67,7 @@ const DashBoard = (props) => {
               <Button
                 sx={{ backgroundColor: colors.gray[700], color: colors.gray[100], fontSize: "14px", fontWeight: "bold", padding: "10px 20px", mb: "30px" }}
                 onClick={() => toPDF()}>
-                <DownloadOutlinedIcon sx={{ mr: "10px" }} />
+                <DownloadOutlinedIcon sx={{ mr: "0px" }} />
                 {!isMobile && "Download"}
               </Button>
             </Box>

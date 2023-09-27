@@ -80,7 +80,7 @@ const LineChart = (props) => {
         <FormControlLabel name="Month" control={<Checkbox checked={displayFilter["Month"]} />} label="Month" onClick={(e) => handleDisplaySwitch(e)} />
         <FormControlLabel name="Year" control={<Checkbox checked={displayFilter["Year"]} />} label="Year" onClick={(e) => handleDisplaySwitch(e)} />
         {currentFilter === "Day" &&
-          <FormControl>
+          <FormControl size="small">
             <InputLabel id="demo-simple-select-label">Range</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -129,7 +129,7 @@ const LineChart = (props) => {
               }
             }
           }}
-          margin={isMobile ? { top: 45, right: 15, bottom: 110, left: 35 } : { top: 10, right: 120, bottom: 120, left: 40 }}
+          margin={isMobile ? { top: 45, right: 15, bottom: 110, left: 35 } : { top: 15, right: 120, bottom: 79, left: 40 }}
           xScale={{ type: 'point' }}
           min-width={0}
           yScale={{
@@ -174,7 +174,7 @@ const LineChart = (props) => {
               anchor: isMobile ? 'top' : 'bottom-right',
               direction: isMobile ? 'row' : 'column',
               justify: false,
-              translateX: isMobile ? -8 : 107,
+              translateX: isMobile ? -8 : 100,
               translateY: isMobile ? -35 : -33,
               itemsSpacing: 0,
               itemDirection: 'left-to-right',
