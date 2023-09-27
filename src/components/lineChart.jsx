@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControlLabel, useTheme } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, useTheme, useMediaQuery } from "@mui/material";
 import { ResponsiveLine } from '@nivo/line'
 import { colorTokens } from "../theme";
 import { useEffect, useState } from "react";
@@ -14,16 +14,17 @@ const LineChart = (props) => {
     "Year": false
   })
   const [currentFilter, setCurrentFilter] = useState("Day")
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   function handleDisplaySwitch(e) {
     if (e.target.checked) {
       let name = e.target.name;
       let resetBoxes = displayFilter
       for (let filter in displayFilter) {
-        if (filter === name) { 
-          resetBoxes[filter] = true 
-        } else { 
-          resetBoxes[filter] = false 
+        if (filter === name) {
+          resetBoxes[filter] = true
+        } else {
+          resetBoxes[filter] = false
         }
       }
       setDisplayFilter(resetBoxes)
@@ -39,7 +40,7 @@ const LineChart = (props) => {
         "color": "hsl(183, 100%, 50%)",
         "data": []
       }];
-      
+
       // Reduce amount of data if we're displaying on a day-to-day basis, as it's too much for the line chart to handle
       let OTData = props.data[`devicesOver${currentFilter}`]["mob_cred_ot"]
       if (currentFilter === "Day") {
@@ -64,7 +65,7 @@ const LineChart = (props) => {
 
     <>
       <Box p="0 30px">
-        <FormControlLabel name="Day" control={<Checkbox checked={displayFilter["Day"]}/>} label="Day" onClick={(e) => handleDisplaySwitch(e)} />
+        <FormControlLabel name="Day" control={<Checkbox checked={displayFilter["Day"]} />} label="Day" onClick={(e) => handleDisplaySwitch(e)} />
         <FormControlLabel name="Month" control={<Checkbox checked={displayFilter["Month"]} />} label="Month" onClick={(e) => handleDisplaySwitch(e)} />
         <FormControlLabel name="Year" control={<Checkbox checked={displayFilter["Year"]} />} label="Year" onClick={(e) => handleDisplaySwitch(e)} />
       </Box>
@@ -101,7 +102,7 @@ const LineChart = (props) => {
               }
             }
           }}
-          margin={{ top: 30, right: 120, bottom: 60, left: 40 }}
+          margin={isMobile ? { top: 45, right: 15, bottom: 110, left: 35 } : { top: 10, right: 120, bottom: 120, left: 40 }}
           xScale={{ type: 'point' }}
           min-width={0}
           yScale={{
@@ -116,19 +117,21 @@ const LineChart = (props) => {
           axisTop={null}
           axisRight={null}
           axisBottom={{
-            tickSize: 5,
+            tickSize: 2,
             tickPadding: 5,
-            tickRotation: 0,
+            tickValues: isMobile ? 5 : 10,
+            tickRotation: -90,
             legend: 'Date',
-            legendOffset: 34,
+            legendOffset: 75,
             legendPosition: 'middle'
           }}
           axisLeft={{
-            tickSize: 5,
-            tickPadding: 5,
+            tickSize: isMobile ? 1 : 3,
+            tickPadding: isMobile ? 3 : 3,
+            tickValues: isMobile ? 5 : 10,
             tickRotation: 1,
             legend: 'Amount',
-            legendOffset: -46,
+            legendOffset: isMobile ? -30 : -36,
             legendPosition: 'middle'
           }}
           enableGridX={false}
@@ -140,11 +143,11 @@ const LineChart = (props) => {
           useMesh={true}
           legends={[
             {
-              anchor: 'bottom-right',
-              direction: 'column',
+              anchor: isMobile ? 'top' : 'bottom-right',
+              direction: isMobile ? 'row' : 'column',
               justify: false,
-              translateX: 107,
-              translateY: -33,
+              translateX: isMobile ? -8 : 107,
+              translateY: isMobile ? -35 : -33,
               itemsSpacing: 0,
               itemDirection: 'left-to-right',
               itemWidth: 80,

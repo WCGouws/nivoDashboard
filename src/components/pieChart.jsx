@@ -1,4 +1,4 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, useTheme, useMediaQuery } from "@mui/material";
 import { ResponsivePie } from '@nivo/pie'
 import { colorTokens } from "../theme";
 import { useEffect, useState } from "react";
@@ -7,6 +7,10 @@ const PieChart = (props) => {
   const theme = useTheme();
   const colors = colorTokens(theme.palette.mode);
   const [pieData, setPieData] = useState(false)
+  const isMobileSmall = useMediaQuery(theme.breakpoints.down("xs"))
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
+  const isDesktopSmall = useMediaQuery('(max-width: 1100px)')
 
   const displayReference = {
     "physical_card": {
@@ -98,7 +102,7 @@ const PieChart = (props) => {
           }
         }}
         colors={{ scheme: 'pastel2' }}
-        margin={{ top: 10, right: 100, bottom: 20, left: 50 }}
+        margin={isMobile ? { top: 40, right: 0, bottom: 0, left: 0 } : { top: 10, right: 100, bottom: 20, left: 50 }}
         min-width={0}
         innerRadius={props.makePie ? 0 : 0.3}
         padAngle={0.7}
@@ -126,18 +130,18 @@ const PieChart = (props) => {
         arcLabelsTextColor="#090b0e"
         legends={[
           {
-            anchor: 'bottom-right',
-            direction: 'column',
+            anchor: isMobile ? 'top' : 'bottom-right',
+            direction: isMobile ? 'row' : 'column',
             justify: false,
-            translateX: 80,
-            translateY: 10,
-            itemsSpacing: 4,
-            itemWidth: 150,
+            translateX: isMobile ? 0 : 160,
+            translateY: isMobile ? -40 : 10,
+            itemsSpacing: isMobile ? 2 : 4,
+            itemWidth: isMobile ? 74 : 150,
             itemHeight: 20,
             itemTextColor: colors.lightGray[600],
-            itemDirection: 'left-to-right',
+            itemDirection: isMobile ? 'top-to-bottom' : 'left-to-right',
             itemOpacity: 1,
-            symbolSize: 12,
+            symbolSize: isMobile ? 8 : 12,
             symbolShape: 'circle',
             effects: [
               {
