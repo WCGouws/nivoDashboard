@@ -25,7 +25,7 @@ const DashBoard = (props) => {
   useEffect(() => {
 
     async function callAPI() {
-      const baseURL = "http://10.0.0.102:3000/api/v1"
+      const baseURL = "http://localhost:3000/api/v1"
       const [allDevices, studentDevices, employeeDevices, affiliateDevices, allDevicesOT, devicesOTYear, devicesOTMonth, expiringDevices] = await Promise.all([
         JSON.parse(await (await fetch(`${baseURL}/devices/all`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/student`)).text()),
