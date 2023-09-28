@@ -1,7 +1,7 @@
-import { Box, IconButton, useTheme, Typography, useMediaQuery } from "@mui/material";
+import { Box, IconButton, useTheme, Typography, useMediaQuery, Button } from "@mui/material";
 import { useContext, useState } from "react";
 import { ColorModeContext, colorTokens } from "../../../theme";
-import { MenuItem } from "react-pro-sidebar";
+//import { MenuItem } from "react-pro-sidebar";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import HomeoutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -10,18 +10,18 @@ import PersonoutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { Link } from "react-router-dom";
 import DrawerComponent from "../../../components/drawer";
 
-const Item = ({ title, to, icon, selected, setSelected }) => {
-    const theme = useTheme();
-    const colors = colorTokens(theme.palette.mode);
-    return (
-        <MenuItem active={selected === title} style={{ color: colors.gray[100] }} onClick={() => setSelected(title)} icon={icon}>
-            <Typography>
-                {title}
-            </Typography>
-            <link to={to} />
-        </MenuItem>
-    )
-}
+// const Item = ({ title, to, icon, selected, setSelected }) => {
+//     const theme = useTheme();
+//     const colors = colorTokens(theme.palette.mode);
+//     return (
+//         <MenuItem active={selected === title} style={{ color: colors.gray[100] }} onClick={() => setSelected(title)} icon={icon}>
+//             <Typography>
+//                 {title}
+//             </Typography>
+//             <link to={to} />
+//         </MenuItem>
+//     )
+// }
 
 const TopBar = () => {
     const theme = useTheme();
@@ -34,10 +34,12 @@ const TopBar = () => {
             display="flex"
             justifyContent="space-between"
             p={8}
+            pl={6}
+            pr={4}
             height="10%"
         >
             {isMobile ? (<DrawerComponent />)
-                : (<Box display="flex" justifyContent="space-between" p={2}>
+                : (<Box display="flex" justifyContent="space-between" p={2} >
                     <Box mb="25px">
                         <Box display="flex" justifyContent="center" alignItems="center">
                             <img
@@ -53,6 +55,7 @@ const TopBar = () => {
                         <HomeoutlinedIcon />
                         Home
                     </IconButton>
+                    {/* <Button onClick={handleLooks} variant="outlined"> Home</Button> */}
                     <IconButton component={Link} to="/students">
                         <PeopleoutlinedIcon />
                         Students
@@ -70,7 +73,7 @@ const TopBar = () => {
             }
 
 
-            <Box display="flex">
+            <Box display="flex" >
                 <IconButton onClick={colorMode.toggleColorMode}>
                     {theme.palette.mode === 'dark' ? (
                         <DarkModeOutlinedIcon />

@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControl, FormControlLabel, InputLabel, Select, useTheme, MenuItem } from "@mui/material";
+import { Box, Checkbox, FormControl, FormControlLabel, InputLabel, Select, useTheme, MenuItem, useMediaQuery } from "@mui/material";
 import { ResponsiveLine } from '@nivo/line'
 import { colorTokens } from "../theme";
 import { useEffect, useState } from "react";
@@ -14,6 +14,7 @@ const LineChart = (props) => {
   })
   const [currentFilter, setCurrentFilter] = useState("Day")
   const [dayRange, setDayRange] = useState(-30);
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   function handleDayRangeChange(e) {
     setDayRange(e.target.value);
@@ -78,21 +79,21 @@ const LineChart = (props) => {
         <FormControlLabel name="Day" control={<Checkbox checked={displayFilter["Day"]} />} label="Day" onClick={(e) => handleDisplaySwitch(e)} />
         <FormControlLabel name="Month" control={<Checkbox checked={displayFilter["Month"]} />} label="Month" onClick={(e) => handleDisplaySwitch(e)} />
         <FormControlLabel name="Year" control={<Checkbox checked={displayFilter["Year"]} />} label="Year" onClick={(e) => handleDisplaySwitch(e)} />
-        {currentFilter === "Day" && 
-          <FormControl>
-          <InputLabel id="demo-simple-select-label">Range</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={dayRange}
-            label="Day Range"
-            onChange={handleDayRangeChange}
-          >
-            <MenuItem value={-30}>30 days</MenuItem>
-            <MenuItem value={-90}>90 days</MenuItem>
-            <MenuItem value={-365}>1 year</MenuItem>
-          </Select>
-        </FormControl>
+        {currentFilter === "Day" &&
+          <FormControl size="small">
+            <InputLabel id="demo-simple-select-label">Range</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={dayRange}
+              label="Day Range"
+              onChange={handleDayRangeChange}
+            >
+              <MenuItem value={-30}>30 days</MenuItem>
+              <MenuItem value={-90}>90 days</MenuItem>
+              <MenuItem value={-365}>1 year</MenuItem>
+            </Select>
+          </FormControl>
         }
       </Box>
 
@@ -128,7 +129,7 @@ const LineChart = (props) => {
               }
             }
           }}
-          margin={{ top: 30, right: 120, bottom: 60, left: 40 }}
+          margin={isMobile ? { top: 45, right: 15, bottom: 110, left: 35 } : { top: 15, right: 120, bottom: 79, left: 40 }}
           xScale={{ type: 'point' }}
           min-width={0}
           yScale={{
@@ -143,16 +144,21 @@ const LineChart = (props) => {
           axisTop={null}
           axisRight={null}
           axisBottom={{
-            tickSize: 5,
+            tickSize: 2,
             tickPadding: 5,
+            tickValues: isMobile ? 5 : 10,
             tickRotation: -90,
+            legend: 'Date',
+            legendOffset: 75,
+            legendPosition: 'middle'
           }}
           axisLeft={{
-            tickSize: 5,
-            tickPadding: 5,
+            tickSize: isMobile ? 1 : 3,
+            tickPadding: isMobile ? 3 : 3,
+            tickValues: isMobile ? 5 : 10,
             tickRotation: 1,
             legend: 'Amount',
-            legendOffset: -46,
+            legendOffset: isMobile ? -30 : -36,
             legendPosition: 'middle'
           }}
           enableGridX={false}
@@ -165,11 +171,11 @@ const LineChart = (props) => {
           useMesh={true}
           legends={[
             {
-              anchor: 'bottom-right',
-              direction: 'column',
+              anchor: isMobile ? 'top' : 'bottom-right',
+              direction: isMobile ? 'row' : 'column',
               justify: false,
-              translateX: 107,
-              translateY: -33,
+              translateX: isMobile ? -8 : 100,
+              translateY: isMobile ? -35 : -33,
               itemsSpacing: 0,
               itemDirection: 'left-to-right',
               itemWidth: 80,
