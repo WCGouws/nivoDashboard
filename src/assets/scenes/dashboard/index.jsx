@@ -9,6 +9,8 @@ import StatBox from "../../../components/statBox";
 import { useEffect, useState } from 'react';
 import { Grid } from "@mui/material";
 import { usePDF } from 'react-to-pdf';
+import ScatterPlotChart from "../../../components/scatterPlot";
+
 
 const DashBoard = (props) => {
   const theme = useTheme();
@@ -21,13 +23,15 @@ const DashBoard = (props) => {
 
     async function callAPI() {
       const baseURL = "http://localhost:3000/api/v1"
-      const [allDevices, studentDevices, employeeDevices, affiliateDevices, allDevicesOT, expiringDevices] = await Promise.all([
+      const [allDevices, studentDevices, employeeDevices, affiliateDevices, allDevicesOT, expiringDevices, lostCards, printedCards] = await Promise.all([
         JSON.parse(await (await fetch(`${baseURL}/devices/all`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/student`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/employee`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/affiliate`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/devices/mob_cred_ot`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/devices/expiring_cards`)).text()),
+        JSON.parse(await (await fetch(`${baseURL}/devices/lost_cards`)).text()),
+        JSON.parse(await (await fetch(`${baseURL}/devices/printed_cards`)).text()),
       ])
 
       setResponseData({
@@ -36,7 +40,9 @@ const DashBoard = (props) => {
         "employee": employeeDevices,
         "affiliate": affiliateDevices,
         "devicesOverTime": allDevicesOT, // Note that this is filterable by month/year as well, but requires a different endpoint
-        "expiringDevices": expiringDevices
+        "expiringDevices": expiringDevices,
+        "lostCards":lostCards,
+        "printedCards":printedCards,
       })
 
     }
@@ -275,6 +281,42 @@ const DashBoard = (props) => {
               <Box height="250px" mt="20px">
                   <RadialBarChart data={responseData} displayAll={true} makeHorizontal={false} endPoint={props.endPoint} />
               </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <Box backgroundColor={colors.black[700]}
+              alignItems="center"
+              justifyContent="center"
+              gridColumn="span 3"
+              padding={2}>
+              <Box
+                mt="25px"
+                p="0 30px"
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Box>
+                  <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>Amount of people that lost a certain amount of cards</Typography>
+                </Box>
+              </Box>
+              <Box height="250px" mt="20px">
+                  <ScatterPlotChart data={responseData} displayAll={true} makeHorizontal={false} endPoint={props.endPoint} />
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <Box
+              backgroundColor={colors.black[700]}
+              alignItems="center"
+              justifyContent="center"
+              gridColumn="span 3"
+              padding={2}
+            >
+              <StatBox
+                tilte="Number of people who printed a physical card more than once:"
+                amount={responseData && responseData["printedCards"]["printed_cards"].length}
+              />
             </Box>
           </Grid>
         </Grid>

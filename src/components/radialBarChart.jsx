@@ -28,18 +28,19 @@ const RadialBarChart = (props) => {
                 const nextMonth = currMonth+1;
                 const oneWeek = new Date(currDate);
                 oneWeek.setDate(currDate.getDate()+7);
+                const twoMonths = currMonth+1;
                 let countThisMonth = 0;
                 let countNextMonth = 0;
-                let countThisWeek = 0;
-                const filteredData = props.data["expiringDevices"]['lost_cards'].filter(item => {
+                let countTwoMonths = 0;
+                const filteredData = props.data["expiringDevices"]['exp_cards'].filter(item => {
                     const itemData = new Date(item["MEDIAEXPIRATION"])
                     
                     if ((itemData.getFullYear() == currYear)&&(itemData.getMonth()+1==currMonth)){
                         countThisMonth=countThisMonth+1;
                     } else if((itemData.getFullYear() == currYear)&&(itemData.getMonth()+1==nextMonth)){
                         countNextMonth=countNextMonth+1;
-                    } else if((itemData >= currDate)&&(itemData <= oneWeek)){
-                        countThisWeek=countThisWeek+1;
+                    } else if((itemData.getFullYear() == currYear)&&(itemData.getMonth()+1==twoMonths)){
+                        countTwoMonths=countTwoMonths+1;
                     } else {
                         
                     }
@@ -50,9 +51,9 @@ const RadialBarChart = (props) => {
                 });
                 
                 refinedData.push(
-                    {"id":"next 30 days", "data": [{x:"amount1",y:countThisMonth}]},
+                    {"id":"this month", "data": [{x:"amount1",y:countThisMonth}]},
                     {"id":"next month", "data": [{x:"amount2",y:countNextMonth}] },
-                    {"id":"next week", "data": [{x:"amount3",y:countThisWeek}] }
+                    {"id":"the month after next", "data": [{x:"amount3",y:countTwoMonths}] }
                 );
                 setBarData(refinedData);
             }
