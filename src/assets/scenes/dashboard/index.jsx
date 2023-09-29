@@ -264,7 +264,7 @@ const DashBoard = (props) => {
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={isMobileSmall ? 12 : 4} sm={isMobile ? 12 : 12} md={12}>
+          {props.endPoint == "all" ? <Grid item xs={isMobileSmall ? 12 : 4} sm={isMobile ? 12 : 12} md={12}>
             <Box backgroundColor={colors.black[700]}
               alignItems="center"
               justifyContent="center"
@@ -286,7 +286,7 @@ const DashBoard = (props) => {
                 <LineChart data={responseData} arcLabel={true} endPoint={props.endPoint} />
               </Box>
             </Box>
-          </Grid>
+          </Grid> : ''}
         </Grid>
       </Box>
     </Box >
