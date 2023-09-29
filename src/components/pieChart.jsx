@@ -155,8 +155,8 @@ const PieChart = (props) => {
         ]}
         tooltip={(item) => {
           return (
-            <div style={{ background: colors.blue[800], padding: '6px 30px' }}>
-              <div>{item.datum.value}</div>
+            <div style={{ background: colors.blue[800], padding: '6px 10px' }}>
+              <div>{item.datum.id + " " + item.datum.value}</div>
             </div>
           )
         }}
