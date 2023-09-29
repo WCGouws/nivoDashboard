@@ -250,8 +250,8 @@ const BarChart = (props) => {
           ]}
           tooltip={(item) => {
             return (
-              <div style={{ background: colors.blue[800], padding: '6px 30px' }}>
-                <div>{item.value}</div>
+              <div style={{ background: colors.blue[800], padding: '6px 10px' }}>
+                <div>{item.id + " " + item.value}</div>
               </div>
             )
           }}
