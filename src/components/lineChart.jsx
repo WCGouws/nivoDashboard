@@ -129,7 +129,7 @@ const LineChart = (props) => {
               }
             }
           }}
-          margin={isMobile ? { top: 45, right: 15, bottom: 110, left: 35 } : { top: 15, right: 120, bottom: 79, left: 40 }}
+          margin={isMobile ? { top: 45, right: 15, bottom: 40, left: 35 } : { top: 15, right: 120, bottom: 79, left: 40 }}
           xScale={{ type: 'point' }}
           min-width={0}
           yScale={{
@@ -143,7 +143,7 @@ const LineChart = (props) => {
           curve="natural"
           axisTop={null}
           axisRight={null}
-          axisBottom={{
+          axisBottom={isMobile ? false : {
             tickSize: 2,
             tickPadding: 5,
             tickValues: isMobile ? 5 : 10,
@@ -197,8 +197,9 @@ const LineChart = (props) => {
           ]}
           tooltip={(item) => {
             return (
-              <div style={{ background: colors.blue[800], padding: '6px 30px' }}>
-                <div>{item.point.data.y}</div>
+              <div style={{ background: colors.blue[800], padding: '6px 10px' }}>
+                <div style={{ textAlign: "center" }}>{item.point.data.x + ":"}</div>
+                <div style={{ textAlign: "center" }}>{item.point.data.y}</div>
               </div>
             )
           }}
