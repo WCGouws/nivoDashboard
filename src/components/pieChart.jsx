@@ -134,7 +134,7 @@ const PieChart = (props) => {
             itemsSpacing: 4,
             itemWidth: 150,
             itemHeight: 20,
-            itemTextColor: colors.lightGray[600],
+            itemTextColor: theme.palette.mode=="dark" ? colors.lightGray[600]: "#333",
             itemDirection: 'left-to-right',
             itemOpacity: 1,
             symbolSize: 12,

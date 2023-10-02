@@ -134,13 +134,13 @@ return (
                 strokeWidth: 1
               },
               text: {
-                fill: colors.lightGray[700]
+                fill: theme.palette.mode=="dark" ? colors.lightGray[700]: "#333"
               }
             }
           },
           legends: {
             text: {
-              fill: colors.lightGray[700]
+              fill: theme.palette.mode=="dark" ? colors.lightGray[700]: "#333"
             }
           }
         }}
