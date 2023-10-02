@@ -11,9 +11,9 @@ const RadialBarChart = (props) => {
     const colors = colorTokens(theme.palette.mode);
     const [barData, setBarData] = useState('');
     const [legendList, setLegendList] = useState([
-        'Cards expiring in the next 30 days',
-        'Cards expiring next Month',
-        'Cards expiring in this week',
+        'Cards expiring in 1 week',
+        'Cards expiring in 2 weeks',
+        'Cards expiring in 3 weeks',
     ])
     let refinedData = [];
 

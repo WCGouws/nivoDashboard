@@ -279,7 +279,7 @@ const DashBoard = (props) => {
                 </Box>
               </Box>
               <Box height="250px" mt="20px">
-                  <RadialBarChart data={responseData} displayAll={true} makeHorizontal={false} endPoint={props.endPoint} />
+                  <PieChart data={responseData} displayAll={false} watchPhone={true} mobileCard={false} makePie={false} arcLabel={true} endPoint={props.endPoint} />
               </Box>
             </Box>
           </Grid>
