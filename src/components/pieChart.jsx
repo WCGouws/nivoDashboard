@@ -33,16 +33,16 @@ const PieChart = (props) => {
 
   function handleDataRestructure() {
     if (props.data && props.data !== "" && props.displayAll) {
-      let refineData = [];
+      let refinedData = [];
       for (let item in displayReference) {
-        refineData.push({
+        refinedData.push({
           "id": item,
           "label": displayReference[item]["displayName"],
           "value": parseInt(props.data[props.endPoint][item]),
           "color": displayReference[item]["color"]
         })
       }
-      setPieData(refineData)
+      setPieData(refinedData)
     } else if (props.data && props.data !== "" && props.mobileCard) {
       let refinedData = [];
       let mobileTotal = props.data[props.endPoint]["iphone"] + props.data[props.endPoint]["android"]
@@ -62,6 +62,47 @@ const PieChart = (props) => {
         })
 
       setPieData(refinedData)
+    } else if (props.data && props.data !== "" ) {
+        let refinedData = [];
+        const currDate = new Date();
+        currDate.setFullYear(currDate.getFullYear()-1);
+        const oneWeek = new Date(currDate);
+        const twoWeeks = new Date(currDate);
+        const threeWeeks = new Date(currDate);
+        const fourWeeks = new Date(currDate);
+        oneWeek.setDate(currDate.getDate()+7);
+        twoWeeks.setDate(currDate.getDate()+14);
+        threeWeeks.setDate(currDate.getDate()+21);
+        fourWeeks.setDate(currDate.getDate()+28);
+        let countThisWeek = 0;
+        let countTwoWeeks = 0;
+        let countThreeWeeks = 0;
+        let countFourWeeks = 0;
+        const filteredData = props.data["expiringDevices"]['exp_cards'].filter(item => {
+          const itemData = new Date(item["MEDIAEXPIRATION"])
+                  
+          if ((itemData.getDate() >= currDate.getDate())&&(itemData.getDate()<=oneWeek.getDate())){
+              countThisWeek=countThisWeek+1;
+          } else if((itemData.getDate() >= oneWeek.getDate())&&(itemData.getDate()<=twoWeeks.getDate())){
+              countTwoWeeks=countTwoWeeks+1;
+          } else if((itemData.getDate() >= twoWeeks.getDate())&&(itemData.getDate()<=threeWeeks.getDate())){
+              countThreeWeeks=countThreeWeeks+1;
+          } else if((itemData.getDate() >= threeWeeks.getDate())&&(itemData.getDate()<=fourWeeks.getDate())){
+              countFourWeeks=countFourWeeks+1;     
+          }
+                  
+          return (
+            itemData
+          );
+        });
+            
+        refinedData.push(
+            {"id":"Cards expiring in 1 week", "value": countThisWeek},
+            {"id":"Cards expiring in 2 weeks", "value": countTwoWeeks},
+            {"id":"Cards expiring in 3 weeks", "value": countThreeWeeks},
+            {"id":"Cards expiring in 4 weeks", "value": countFourWeeks}
+        );
+        setPieData(refinedData);
     }
   }
 
