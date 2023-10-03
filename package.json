@@ -23,6 +23,7 @@
     "@nivo/radial-bar": "^0.83.0",
     "@nivo/scatterplot": "^0.83.0",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.9.0",
     "react-dom": "^18.2.0",
     "react-pro-sidebar": "^0.7.1",
     "react-responsive": "^9.0.2",
