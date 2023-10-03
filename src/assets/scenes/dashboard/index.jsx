@@ -26,11 +26,14 @@ const DashBoard = (props) => {
 
     async function callAPI() {
       const baseURL = "http://localhost:3000/api/v1"
-      const [allDevices, studentDevices, employeeDevices, affiliateDevices, allDevicesOT, devicesOTYear, devicesOTMonth, expiringDevices] = await Promise.all([
+      const [allDevices, studentDevices, studentDeviceOT, employeeDevices, employeeDeviceOT, affiliateDevices, affiliateDevicesOT, allDevicesOT, devicesOTYear, devicesOTMonth, expiringDevices] = await Promise.all([
         JSON.parse(await (await fetch(`${baseURL}/devices/all`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/student`)).text()),
+        JSON.parse(await (await fetch(`${baseURL}/student/mob_cred_ot`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/employee`)).text()),
+        JSON.parse(await (await fetch(`${baseURL}/employee/mob_cred_ot`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/affiliate`)).text()),
+        JSON.parse(await (await fetch(`${baseURL}/affiliate/mob_cred_ot`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/devices/mob_cred_ot`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/devices/mob_cred_ot/year`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/devices/mob_cred_ot/month`)).text()),
@@ -40,8 +43,11 @@ const DashBoard = (props) => {
       setResponseData({
         "all": allDevices,
         "student": studentDevices,
+        "studentOT": studentDeviceOT,
         "employee": employeeDevices,
+        "employeeOT": employeeDeviceOT,
         "affiliate": affiliateDevices,
+        "affiliateOT": affiliateDevicesOT,
         "devicesOverDay": allDevicesOT,
         "devicesOverYear": devicesOTYear,
         "devicesOverMonth": devicesOTMonth,
@@ -264,7 +270,7 @@ const DashBoard = (props) => {
               </Box>
             </Box>
           </Grid>
-          {props.endPoint == "all" ? <Grid item xs={isMobileSmall ? 12 : 4} sm={isMobile ? 12 : 12} md={12}>
+          <Grid item xs={isMobileSmall ? 12 : 4} sm={isMobile ? 12 : 12} md={12}>
             <Box backgroundColor={colors.black[700]}
               alignItems="center"
               justifyContent="center"
@@ -286,7 +292,7 @@ const DashBoard = (props) => {
                 <LineChart data={responseData} arcLabel={true} endPoint={props.endPoint} />
               </Box>
             </Box>
-          </Grid> : ''}
+          </Grid>
         </Grid>
       </Box>
     </Box >

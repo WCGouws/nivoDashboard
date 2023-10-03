@@ -45,9 +45,37 @@ const LineChart = (props) => {
         "data": []
       }];
 
-      // Reduce amount of data if we're displaying on a day-to-day basis, as it's too much for the line chart to handle
-      let OTData = props.data[`devicesOver${currentFilter}`]["mob_cred_ot"]
-      if (currentFilter === "Day") {
+
+      if (props.endPoint == "all") {
+        let OTData = props.data[`devicesOver${currentFilter}`]["mob_cred_ot"];
+        // Reduce amount of data if we're displaying on a day-to-day basis, as it's too much for the line chart to handle
+        if (currentFilter === "Day") { //
+          OTData = OTData.slice(dayRange)
+          if (dayRange === -365) {
+            let stripped = []
+            for (let i = 0; i < OTData.length; i += 5) {
+              stripped.push(OTData[i]);
+            }
+            OTData = stripped;
+          }
+        }
+
+        for (let date of OTData) {
+          refinedData[0].data.push({
+            "x": date.date,
+            "y": date.count
+          })
+        }
+        setLineData(refinedData)
+
+      } else if (props.endPoint != "all") {
+        setCurrentFilter("Day")
+        setDisplayFilter({
+          "Day": true,
+          "Month": false,
+          "Year": false
+        })
+        let OTData = props.data[`${props.endPoint}OT`]["mob_cred_ot"];
         OTData = OTData.slice(dayRange)
         if (dayRange === -365) {
           let stripped = []
@@ -56,15 +84,15 @@ const LineChart = (props) => {
           }
           OTData = stripped;
         }
-      }
 
-      for (let date of OTData) {
-        refinedData[0].data.push({
-          "x": date.date,
-          "y": date.count
-        })
+        for (let date of OTData) {
+          refinedData[0].data.push({
+            "x": date.date,
+            "y": date.count
+          })
+        }
+        setLineData(refinedData)
       }
-      setLineData(refinedData)
     }
   }
 
@@ -72,13 +100,18 @@ const LineChart = (props) => {
     handleDataRestructure()
   }, [props.data, currentFilter, dayRange])
 
+
   return (
 
     <>
       <Box p="0 30px">
         <FormControlLabel name="Day" control={<Checkbox checked={displayFilter["Day"]} />} label="Day" onClick={(e) => handleDisplaySwitch(e)} />
-        <FormControlLabel name="Month" control={<Checkbox checked={displayFilter["Month"]} />} label="Month" onClick={(e) => handleDisplaySwitch(e)} />
-        <FormControlLabel name="Year" control={<Checkbox checked={displayFilter["Year"]} />} label="Year" onClick={(e) => handleDisplaySwitch(e)} />
+        {props.endPoint == "all" &&
+          <>
+            <FormControlLabel name="Month" control={<Checkbox checked={displayFilter["Month"]} />} label="Month" onClick={(e) => handleDisplaySwitch(e)} />
+            <FormControlLabel name="Year" control={<Checkbox checked={displayFilter["Year"]} />} label="Year" onClick={(e) => handleDisplaySwitch(e)} />
+          </>
+        }
         {currentFilter === "Day" &&
           <FormControl size="small">
             <InputLabel id="demo-simple-select-label">Range</InputLabel>
