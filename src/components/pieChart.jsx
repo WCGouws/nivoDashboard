@@ -1,4 +1,4 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, useTheme, useMediaQuery } from "@mui/material";
 import { ResponsivePie } from '@nivo/pie'
 import { colorTokens } from "../theme";
 import { useEffect, useState } from "react";
@@ -7,6 +7,10 @@ const PieChart = (props) => {
   const theme = useTheme();
   const colors = colorTokens(theme.palette.mode);
   const [pieData, setPieData] = useState(false)
+  const isMobileSmall = useMediaQuery(theme.breakpoints.down("xs"))
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
+  const isDesktopSmall = useMediaQuery('(max-width: 1100px)')
 
   const displayReference = {
     "physical_card": {
@@ -27,24 +31,23 @@ const PieChart = (props) => {
     },
   }
 
-  useEffect(() => {
-
+  function handleDataRestructure() {
     if (props.data && props.data !== "" && props.displayAll) {
-      let refineData = [];
+      let refinedData = [];
       for (let item in displayReference) {
-        refineData.push({
+        refinedData.push({
           "id": item,
           "label": displayReference[item]["displayName"],
           "value": parseInt(props.data[props.endPoint][item]),
           "color": displayReference[item]["color"]
         })
       }
-      setPieData(refineData)
+      setPieData(refinedData)
     } else if (props.data && props.data !== "" && props.mobileCard) {
-      let refineData = [];
+      let refinedData = [];
       let mobileTotal = props.data[props.endPoint]["iphone"] + props.data[props.endPoint]["android"]
       let cardTotal = props.data[props.endPoint]["physical_card"]
-      refineData.push(
+      refinedData.push(
         {
           "id": "Mobile",
           "label": "Mobile",
@@ -58,8 +61,8 @@ const PieChart = (props) => {
           "color": "hsl(318, 70%, 50%)"
         })
 
-      setPieData(refineData)
-    } else if (props.data && props.data !== "" && props.watchPhone) {
+      setPieData(refinedData)
+    } else if (props.data && props.data !== "" ) {
         let refinedData = [];
         const currDate = new Date();
         currDate.setFullYear(currDate.getFullYear()-1);
@@ -101,12 +104,16 @@ const PieChart = (props) => {
         );
         setPieData(refinedData);
     }
+  }
+
+  useEffect(() => {
+    handleDataRestructure()
   }, [props.data])
 
   return (
     <>
       {pieData ? <ResponsivePie
-        data={pieData ? pieData : mockData}
+        data={pieData}
         theme={{
           axis: {
             domain: {
@@ -136,7 +143,7 @@ const PieChart = (props) => {
           }
         }}
         colors={{ scheme: 'pastel2' }}
-        margin={{ top: 10, right: 100, bottom: 20, left: 50 }}
+        margin={isMobile ? { top: 40, right: 0, bottom: 0, left: 0 } : { top: 10, right: 100, bottom: 20, left: 50 }}
         min-width={0}
         innerRadius={props.makePie ? 0 : 0.3}
         padAngle={0.7}
@@ -164,18 +171,18 @@ const PieChart = (props) => {
         arcLabelsTextColor="#090b0e"
         legends={[
           {
-            anchor: 'bottom-right',
-            direction: 'column',
+            anchor: isMobile ? 'top' : 'bottom-right',
+            direction: isMobile ? 'row' : 'column',
             justify: false,
-            translateX: 80,
-            translateY: 10,
-            itemsSpacing: 4,
-            itemWidth: 150,
+            translateX: isMobile ? 0 : 160,
+            translateY: isMobile ? -40 : 10,
+            itemsSpacing: isMobile ? 2 : 4,
+            itemWidth: isMobile ? 74 : 150,
             itemHeight: 20,
             itemTextColor: colors.lightGray[600],
-            itemDirection: 'left-to-right',
+            itemDirection: isMobile ? 'top-to-bottom' : 'left-to-right',
             itemOpacity: 1,
-            symbolSize: 12,
+            symbolSize: isMobile ? 8 : 12,
             symbolShape: 'circle',
             effects: [
               {
@@ -189,8 +196,8 @@ const PieChart = (props) => {
         ]}
         tooltip={(item) => {
           return (
-            <div style={{ background: colors.blue[800], padding: '6px 30px' }}>
-              <div>{item.datum.value}</div>
+            <div style={{ background: colors.blue[800], padding: '6px 10px' }}>
+              <div>{item.datum.id + " " + item.datum.value}</div>
             </div>
           )
         }}

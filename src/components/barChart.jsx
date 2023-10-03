@@ -1,19 +1,17 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, useTheme, useMediaQuery } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import { colorTokens } from "../theme";
-import { useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 
 const BarChart = (props) => {
   const theme = useTheme();
   const colors = colorTokens(theme.palette.mode);
   const [barData, setBarData] = useState('');
-  const [legendList, setLegendList] = useState([
-    'iphone',
-    'iwatch',
-    'android',
-    'physical_card',
-  ])
+  const [legendList, setLegendList] = useState('')
+  const isMobileSmall = useMediaQuery(theme.breakpoints.down("xs"))
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
+  const isDesktopSmall = useMediaQuery('(max-width: 1100px)')
 
   const displayReference = {
     "physical_card": {
@@ -29,79 +27,88 @@ const BarChart = (props) => {
       color: "hsl(125, 70%, 50%)"
     },
     "iwatch": {
-      displayName: "Apple Watch",
+      displayName: "iWatch",
       color: "hsl(332, 70%, 50%)"
     },
   }
 
-  useEffect(() => {
+  function handleDataRestructure() {
+    if (props.displayAll) {
+      // const seperates = await fetchSeparates();
+      const patronGroupsOnly = {
+        "Student": props.data["student"],
+        "Employee": props.data["employee"],
+        "Affiliate": props.data["affiliate"],
+      }
 
-    async function handleDataRestructure() {
-      if (props.displayAll) {
-        // const seperates = await fetchSeparates();
-        const patronGroupsOnly = {
-          "Student": props.data["student"],
-          "Employee": props.data["employee"],
-          "Affiliate": props.data["affiliate"],
-        }
+      let refinedData = [];
 
-        let refinedData = [];
-
-        for (let patronGroup in patronGroupsOnly) {
-          let miniObj = { "column": patronGroup }
-          for (let device in patronGroupsOnly[patronGroup]) {
-            if (device !== "devices_total") {
-              miniObj[device] = patronGroupsOnly[patronGroup][device]
-              miniObj[`${device}Color`] = displayReference[device]["color"]
-            }
+      for (let patronGroup in patronGroupsOnly) {
+        let miniObj = { "column": patronGroup }
+        for (let device in patronGroupsOnly[patronGroup]) {
+          if (device !== "devices_total") {
+            miniObj[displayReference[device]["displayName"]] = patronGroupsOnly[patronGroup][device]
+            miniObj[`${displayReference[device]["displayName"]}Color`] = displayReference[device]["color"]
           }
-          refinedData.push(miniObj)
         }
-        ["lost_cards"].length
+        refinedData.push(miniObj)
+      }
 
-      } else if (props.data && props.data !== "" && props.watchPhone) {
+
+      setBarData(refinedData)
+
+    } else if (props.data && props.data !== "" && props.watchPhone) {
+      let refinedData = [];
+      let watchTotal = props.data[props.endPoint]["iwatch"]
+      let phoneTotal = props.data[props.endPoint]["iphone"]
+      refinedData.push(
+        {
+          "column": "iWatch",
+          "iWatch": watchTotal,
+          "iWatchColor": "hsl(332, 70%, 50%)"
+        },
+        {
+          "column": "iPhone",
+          "iPhone": phoneTotal,
+          "iPhoneColor": "hsl(125, 70%, 50%)"
+        }
+      )
+      setBarData(refinedData)
+
+    } else {
+
+      if (props.data && props.data !== "") {
         let refinedData = [];
-        let watchTotal = props.data[props.endPoint]["iwatch"]
-        let phoneTotal = props.data[props.endPoint]["iphone"]
-        refinedData.push(
-          {
-            "column": "iwatch",
-            "iwatch": watchTotal,
-            "iwatchColor": "hsl(332, 70%, 50%)"
-          },
-          {
-            "column": "iphone",
-            "iphone": phoneTotal,
-            "iphoneColor": "hsl(125, 70%, 50%)"
-          }
-        )
-        setBarData(refinedData)
-
-      } else {
-
-        if (props.data && props.data !== "") {
-          let refinedData = [];
-          for (let device in props.data[props.endPoint]) {
+        for (let device in props.data[props.endPoint]) {
+          if (device !== "devices_total") {
             refinedData.push({
-              "column": device,
-              [device]: props.data[props.endPoint][device],
-              [`${device}Color`]: displayReference[device]["color"]
+              "column": displayReference[device]["displayName"],
+              [displayReference[device]["displayName"]]: props.data[props.endPoint][device],
+              [`${displayReference[device]["displayName"]}Color`]: displayReference[device]["color"]
             })
           }
-          setBarData(refinedData)
         }
+        setBarData(refinedData)
       }
     }
+  }
 
+  useEffect(() => {
     handleDataRestructure()
-
   }, [props.data])
 
   useEffect(() => {
     if (props.watchPhone) {
       setLegendList([
-        'iphone',
-        'iwatch'
+        'iPhone',
+        'iWatch'
+      ])
+    } else {
+      setLegendList([
+        'iPhone',
+        'iWatch',
+        'Android',
+        'Physical Card',
       ])
     }
   }, [])
@@ -143,7 +150,7 @@ const BarChart = (props) => {
           }}
           keys={legendList}
           indexBy="column"
-          margin={{ top: 50, right: 150, bottom: 50, left: 90 }}
+          margin={isMobile ? { top: 50, right: 5, bottom: 20, left: 35 } : { top: 50, right: 150, bottom: 50, left: 90 }}
           padding={0.35}
           valueScale={{ type: 'linear' }}
           indexScale={{ type: 'band', round: true }}
@@ -197,15 +204,17 @@ const BarChart = (props) => {
           axisRight={null}
           axisBottom={{
             tickSize: 5,
+            tickValues: isMobile ? 5 : 10,
             tickPadding: 5,
             tickRotation: 0,
             legend: '',
             legendPosition: 'middle',
-            legendOffset: 32
+            legendOffset: isMobile ? 20 : 32
           }}
           axisLeft={{
-            tickSize: 5,
-            tickPadding: 5,
+            tickSize: isMobile ? 1 : 3,
+            tickValues: isMobile ? 5 : 12,
+            tickPadding: isMobile ? 1 : 5,
             tickRotation: 0,
             legend: '',
             legendPosition: 'middle',
@@ -218,17 +227,17 @@ const BarChart = (props) => {
           legends={[
             {
               dataFrom: 'keys',
-              anchor: 'bottom-right',
-              direction: 'column',
+              anchor: isMobile ? 'top' : 'bottom-right',
+              direction: isMobile ? 'row' : 'column',
               justify: false,
-              translateX: 120,
-              translateY: 0,
-              itemsSpacing: 2,
-              itemWidth: 100,
+              translateX: isMobile ? -10 : 120,
+              translateY: isMobile ? -48 : 0,
+              itemsSpacing: isMobile ? 1 : 2,
+              itemWidth: isMobile ? 60 : 100,
               itemHeight: 20,
-              itemDirection: 'left-to-right',
+              itemDirection: isMobile ? 'top-to-bottom' : 'left-to-right',
               itemOpacity: 0.85,
-              symbolSize: 20,
+              symbolSize: isMobile ? 10 : 20,
               effects: [
                 {
                   on: 'hover',
@@ -241,8 +250,8 @@ const BarChart = (props) => {
           ]}
           tooltip={(item) => {
             return (
-              <div style={{ background: colors.blue[800], padding: '6px 30px' }}>
-                <div>{item.value}</div>
+              <div style={{ background: colors.blue[800], padding: '6px 10px' }}>
+                <div>{item.id + " " + item.value}</div>
               </div>
             )
           }}
