@@ -2,6 +2,7 @@ import { Box, Button, IconButton, Typography, useMediaQuery, useTheme } from "@m
 import { colorTokens } from "../../../theme";
 import Header from "../../../components/headers";
 import BarChart from "../../../components/barChart";
+import RadialBarChart from "../../../components/radialBarChart";
 import PieChart from "../../../components/pieChart";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import StatBox from "../../../components/statBox";
@@ -9,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { Grid } from "@mui/material";
 import { usePDF } from 'react-to-pdf';
 import LineChart from "../../../components/lineChart";
+import ScatterPlotChart from "../../../components/scatterPlot";
 
 const DashBoard = (props) => {
   const theme = useTheme();
@@ -26,7 +28,7 @@ const DashBoard = (props) => {
 
     async function callAPI() {
       const baseURL = "http://localhost:3000/api/v1"
-      const [allDevices, studentDevices, studentDeviceOT, employeeDevices, employeeDeviceOT, affiliateDevices, affiliateDevicesOT, allDevicesOT, devicesOTYear, devicesOTMonth, expiringDevices] = await Promise.all([
+      const [allDevices, studentDevices, studentDeviceOT, employeeDevices, employeeDeviceOT, affiliateDevices, affiliateDevicesOT, allDevicesOT, devicesOTYear, devicesOTMonth, expiringDevices, lostCards, printedCards] = await Promise.all([
         JSON.parse(await (await fetch(`${baseURL}/devices/all`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/student`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/student/mob_cred_ot`)).text()),
@@ -38,6 +40,8 @@ const DashBoard = (props) => {
         JSON.parse(await (await fetch(`${baseURL}/devices/mob_cred_ot/year`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/devices/mob_cred_ot/month`)).text()),
         JSON.parse(await (await fetch(`${baseURL}/devices/expiring_cards`)).text()),
+        JSON.parse(await (await fetch(`${baseURL}/devices/lost_cards`)).text()),
+        JSON.parse(await (await fetch(`${baseURL}/devices/printed_cards`)).text()),
       ])
 
       setResponseData({
@@ -51,7 +55,9 @@ const DashBoard = (props) => {
         "devicesOverDay": allDevicesOT,
         "devicesOverYear": devicesOTYear,
         "devicesOverMonth": devicesOTMonth,
-        "expiringDevices": expiringDevices
+        "expiringDevices": expiringDevices,
+        "lostCards": lostCards,
+        "printedCards": printedCards,
       })
 
     }
@@ -291,6 +297,64 @@ const DashBoard = (props) => {
               <Box height="250px" mt="20px">
                 <LineChart data={responseData} arcLabel={true} endPoint={props.endPoint} />
               </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={isMobileSmall ? 12 : 4} sm={isMobile ? 12 : 12} md={12}>
+            <Box backgroundColor={colors.black[700]}
+              alignItems="center"
+              justifyContent="center"
+              gridColumn="span 3"
+              padding={2}>
+              <Box
+                mt="25px"
+                p="0 30px"
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Box>
+                  <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>Cards that are expiring soon</Typography>
+                </Box>
+              </Box>
+              <Box height="250px" mt="20px">
+                <PieChart data={responseData} displayAll={false} watchPhone={true} mobileCard={false} makePie={false} arcLabel={true} endPoint={props.endPoint} />
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <Box backgroundColor={colors.black[700]}
+              alignItems="center"
+              justifyContent="center"
+              gridColumn="span 3"
+              padding={2}>
+              <Box
+                mt="25px"
+                p="0 30px"
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Box>
+                  <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>Amount of people that lost a certain amount of cards</Typography>
+                </Box>
+              </Box>
+              <Box height="250px" mt="20px">
+                <ScatterPlotChart data={responseData} displayAll={true} makeHorizontal={false} endPoint={props.endPoint} />
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <Box
+              backgroundColor={colors.black[700]}
+              alignItems="center"
+              justifyContent="center"
+              gridColumn="span 3"
+              padding={2}
+            >
+              <StatBox
+                tilte="Number of people who printed a physical card more than once:"
+                amount={responseData && responseData["printedCards"]["printed_cards"].length}
+              />
             </Box>
           </Grid>
         </Grid>
