@@ -63,6 +63,7 @@ const PieChart = (props) => {
 
       setPieData(refinedData)
     } else if (props.data && props.data !== "") {
+      let refinedData = [];
       const currDate = new Date();
       currDate.setFullYear(currDate.getFullYear() - 1);
       const oneWeek = new Date(currDate);
@@ -118,7 +119,6 @@ const PieChart = (props) => {
           itemData
         );
       });
-
       setWeekValues(weekVsValue)
 
       refinedData.push(
