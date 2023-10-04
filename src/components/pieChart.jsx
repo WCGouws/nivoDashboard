@@ -86,7 +86,7 @@ const PieChart = (props) => {
         "3 Weeks": [],
         "4 Weeks": []
       }
-      const filteredData = props.data["expiringDevices"]['exp_cards'].filter(item => {
+      const filteredData = props.data["expiringDevices"]['expiring_cards'].filter(item => {
         const itemData = new Date(item["MEDIAEXPIRATION"])
 
         if ((itemData.getDate() >= currDate.getDate()) && (itemData.getDate() <= oneWeek.getDate())) {
