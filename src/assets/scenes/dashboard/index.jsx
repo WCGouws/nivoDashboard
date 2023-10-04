@@ -310,74 +310,80 @@ const DashBoard = (props) => {
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <TabContext value={tabValue}>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList onChange={handleTabChange} aria-label="lab API tabs example">
-                  <Tab label="Expiring Cards" value="expiring" />
-                  <Tab label="Lost Cards" value="lost" />
-                  <Tab label="Printed Cards" value="printed" />
-                </TabList>
-              </Box>
-            </TabContext>
-          </Grid>
-          {tabValue === 'expiring' &&
-            <Grid item xs={12} sm={isMobile ? 12 : 12} md={4}>
-              <Box backgroundColor={colors.black[700]}
-                alignItems="center"
-                justifyContent="center"
-                gridColumn="span 3"
-                padding={2}>
-                <Box
-                  mt="25px"
-                  p="0 30px"
-                  display="flex"
-                  justifyContent="space-between"
+
+          {props.endPoint === "all" &&
+            <>
+              <Grid item xs={12} sm={12} md={12}>
+                <TabContext value={tabValue}>
+                  <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <TabList onChange={handleTabChange} aria-label="lab API tabs example">
+                      <Tab label="Expiring Cards" value="expiring" />
+                      <Tab label="Lost Cards" value="lost" />
+                      <Tab label="Printed Cards" value="printed" />
+                    </TabList>
+                  </Box>
+                </TabContext>
+              </Grid>
+
+              {tabValue === 'expiring' &&
+                <Grid item xs={12} sm={isMobile ? 12 : 12} md={4}>
+                  <Box backgroundColor={colors.black[700]}
+                    alignItems="center"
+                    justifyContent="center"
+                    gridColumn="span 3"
+                    padding={2}>
+                    <Box
+                      mt="25px"
+                      p="0 30px"
+                      display="flex"
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <Box>
+                        <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>Cards that are expiring soon</Typography>
+                      </Box>
+                    </Box>
+                    <Box height="350px" mt="20px">
+                      <PieChart
+                        data={responseData}
+                        displayAll={false}
+                        watchPhone={true}
+                        mobileCard={false}
+                        makePie={true}
+                        arcLabel={true}
+                        endPoint={props.endPoint}
+                        updateTableData={updateTableData}
+                        hasOnClick={true}
+                        colorTheme={"red_yellow_blue"}
+                      />
+                    </Box>
+                  </Box>
+                </Grid>
+              }
+              <Grid item xs={12} sm={tabValue === "expiring" ? isMobile ? 12 : 8 : 12} md={tabValue === "expiring" ? 8 : 12}>
+                <Box backgroundColor={colors.black[700]}
                   alignItems="center"
-                >
-                  <Box>
-                    <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>Cards that are expiring soon</Typography>
+                  justifyContent="center"
+                  gridColumn="span 3"
+                  padding={2}>
+                  <Box
+                    mt="25px"
+                    p="0 30px"
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Box>
+                      <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>Graph data</Typography>
+                    </Box>
+                  </Box>
+                  <Box height="350px" mt="20px" className="special-box">
+                    <TableNonPopup tableData={tableData} tabValue={tabValue} lostCards={responseData && responseData["lostCards"]["lost_cards"]} printedCards={responseData && responseData["printedCards"]["printed_cards"]} />
                   </Box>
                 </Box>
-                <Box height="350px" mt="20px">
-                  <PieChart
-                    data={responseData}
-                    displayAll={false}
-                    watchPhone={true}
-                    mobileCard={false}
-                    makePie={true}
-                    arcLabel={true}
-                    endPoint={props.endPoint}
-                    updateTableData={updateTableData}
-                    hasOnClick={true}
-                    colorTheme={"red_yellow_blue"}
-                  />
-                </Box>
-              </Box>
-            </Grid>
+              </Grid>
+            </>
           }
-          <Grid item xs={12} sm={tabValue === "expiring" ? isMobile ? 12 : 8 : 12} md={tabValue === "expiring" ? 8 : 12}>
-            <Box backgroundColor={colors.black[700]}
-              alignItems="center"
-              justifyContent="center"
-              gridColumn="span 3"
-              padding={2}>
-              <Box
-                mt="25px"
-                p="0 30px"
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Box>
-                  <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>Graph data</Typography>
-                </Box>
-              </Box>
-              <Box height="350px" mt="20px" className="special-box">
-                <TableNonPopup tableData={tableData} tabValue={tabValue} lostCards={responseData && responseData["lostCards"]["lost_cards"]} printedCards={responseData && responseData["printedCards"]["printed_cards"]}/>
-              </Box>
-            </Box>
-          </Grid>
 
           {/* <Grid item xs={12} sm={12} md={6}>
             <Box backgroundColor={colors.black[700]}
