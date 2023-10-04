@@ -11,6 +11,7 @@ import { Grid } from "@mui/material";
 import { usePDF } from 'react-to-pdf';
 import LineChart from "../../../components/lineChart";
 import ScatterPlotChart from "../../../components/scatterPlot";
+import TableNonPopup from "../../../components/TableNonPopup";
 
 const DashBoard = (props) => {
   const theme = useTheme();
@@ -22,7 +23,11 @@ const DashBoard = (props) => {
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
   const isDesktopSmall = useMediaQuery('(max-width: 1100px)')
   const isDesktopLarge = useMediaQuery(theme.breakpoints.up('lg'))
+  const [tableData, setTableData] = useState(null)
 
+  function updateTableData(newData) {
+    setTableData(newData)
+  }
   // CM Server integration
   useEffect(() => {
 
@@ -156,7 +161,7 @@ const DashBoard = (props) => {
                 </Box>
               </Box>
               <Box height="250px" mt="20px">
-                <PieChart data={responseData} displayAll={true} watchPhone={false} mobileCard={false} makePie={false} arcLabel={true} endPoint={props.endPoint} />
+                <PieChart data={responseData} displayAll={true} watchPhone={false} mobileCard={false} makePie={false} arcLabel={true} endPoint={props.endPoint} colorTheme={"pastel2"}/>
               </Box>
             </Box>
           </Grid>
@@ -272,7 +277,7 @@ const DashBoard = (props) => {
                 </Box>
               </Box>
               <Box height="250px" mt="20px">
-                <PieChart data={responseData} displayAll={false} watchPhone={false} mobileCard={true} makePie={true} arcLabel={true} endPoint={props.endPoint} />
+                <PieChart data={responseData} displayAll={false} watchPhone={false} mobileCard={true} makePie={true} arcLabel={true} endPoint={props.endPoint} colorTheme={'set2'}/>
               </Box>
             </Box>
           </Grid>
@@ -299,7 +304,7 @@ const DashBoard = (props) => {
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={isMobileSmall ? 12 : 4} sm={isMobile ? 12 : 12} md={12}>
+          <Grid item xs={12} sm={isMobile ? 12 : 12} md={4}>
             <Box backgroundColor={colors.black[700]}
               alignItems="center"
               justifyContent="center"
@@ -316,12 +321,46 @@ const DashBoard = (props) => {
                   <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>Cards that are expiring soon</Typography>
                 </Box>
               </Box>
-              <Box height="250px" mt="20px">
-                <PieChart data={responseData} displayAll={false} watchPhone={true} mobileCard={false} makePie={false} arcLabel={true} endPoint={props.endPoint} />
+              <Box height="350px" mt="20px">
+                <PieChart
+                  data={responseData}
+                  displayAll={false}
+                  watchPhone={true}
+                  mobileCard={false}
+                  makePie={true}
+                  arcLabel={true}
+                  endPoint={props.endPoint}
+                  updateTableData={updateTableData}
+                  hasOnClick={true}
+                  colorTheme={"red_yellow_blue"}
+                />
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={12} md={6}>
+          <Grid item xs={12} sm={isMobile ? 12 : 8} md={8}>
+            <Box backgroundColor={colors.black[700]}
+              alignItems="center"
+              justifyContent="center"
+              gridColumn="span 3"
+              padding={2}>
+              <Box
+                mt="25px"
+                p="0 30px"
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Box>
+                  <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>Graph data</Typography>
+                </Box>
+              </Box>
+              <Box height="350px" mt="20px" className="special-box">
+                <TableNonPopup tableData={tableData} />
+              </Box>
+            </Box>
+          </Grid>
+
+          {/* <Grid item xs={12} sm={12} md={6}>
             <Box backgroundColor={colors.black[700]}
               alignItems="center"
               justifyContent="center"
@@ -356,7 +395,7 @@ const DashBoard = (props) => {
                 amount={responseData && responseData["printedCards"]["printed_cards"].length}
               />
             </Box>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Box>
     </Box >

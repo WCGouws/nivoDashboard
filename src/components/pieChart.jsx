@@ -7,6 +7,7 @@ const PieChart = (props) => {
   const theme = useTheme();
   const colors = colorTokens(theme.palette.mode);
   const [pieData, setPieData] = useState(false)
+  const [weekValues, setWeekValues] = useState(null)
   const isMobileSmall = useMediaQuery(theme.breakpoints.down("xs"))
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
@@ -32,8 +33,8 @@ const PieChart = (props) => {
   }
 
   function handleDataRestructure() {
+    let refinedData = [];
     if (props.data && props.data !== "" && props.displayAll) {
-      let refinedData = [];
       for (let item in displayReference) {
         refinedData.push({
           "id": item,
@@ -44,7 +45,6 @@ const PieChart = (props) => {
       }
       setPieData(refinedData)
     } else if (props.data && props.data !== "" && props.mobileCard) {
-      let refinedData = [];
       let mobileTotal = props.data[props.endPoint]["iphone"] + props.data[props.endPoint]["android"]
       let cardTotal = props.data[props.endPoint]["physical_card"]
       refinedData.push(
@@ -78,32 +78,71 @@ const PieChart = (props) => {
       let countTwoWeeks = 0;
       let countThreeWeeks = 0;
       let countFourWeeks = 0;
-      props.data["expiringDevices"]['exp_cards'].filter(item => {
+
+      let allData = []
+      let weekVsValue = {
+        "1 Week": [],
+        "2 Weeks": [],
+        "3 Weeks": [],
+        "4 Weeks": []
+      }
+      const filteredData = props.data["expiringDevices"]['exp_cards'].filter(item => {
         const itemData = new Date(item["MEDIAEXPIRATION"])
 
         if ((itemData.getDate() >= currDate.getDate()) && (itemData.getDate() <= oneWeek.getDate())) {
           countThisWeek = countThisWeek + 1;
+          allData.push(item)
+          weekVsValue["1 Week"].push(item)
+          item["rowColor"] = "rgba(162, 8, 40, 0.5)"
+          item["rowColorBorder"] = "rgba(162, 8, 40, 0.7)"
         } else if ((itemData.getDate() >= oneWeek.getDate()) && (itemData.getDate() <= twoWeeks.getDate())) {
           countTwoWeeks = countTwoWeeks + 1;
+          allData.push(item)
+          weekVsValue["2 Weeks"].push(item)
+          item["rowColor"] = "rgba(211, 52, 44, 0.5)"
+          item["rowColorBorder"] = "rgba(211, 52, 44, 0.7)"
         } else if ((itemData.getDate() >= twoWeeks.getDate()) && (itemData.getDate() <= threeWeeks.getDate())) {
           countThreeWeeks = countThreeWeeks + 1;
+          allData.push(item)
+          weekVsValue["3 Weeks"].push(item)
+          item["rowColor"] = "rgba(240, 111, 73, 0.5)"
+          item["rowColorBorder"] = "rgba(240, 111, 73, 0.7)"
         } else if ((itemData.getDate() >= threeWeeks.getDate()) && (itemData.getDate() <= fourWeeks.getDate())) {
           countFourWeeks = countFourWeeks + 1;
+          allData.push(item)
+          weekVsValue["4 Weeks"].push(item)
+          item["rowColor"] = "rgba(250, 175, 104, 0.5)"
+          item["rowColorBorder"] = "rgba(250, 175, 104, 0.7)"
         }
 
         return (
           itemData
         );
       });
+      setWeekValues(weekVsValue)
 
       refinedData.push(
-        { "id": "Cards expiring in 1 week", "value": countThisWeek },
-        { "id": "Cards expiring in 2 weeks", "value": countTwoWeeks },
-        { "id": "Cards expiring in 3 weeks", "value": countThreeWeeks },
-        { "id": "Cards expiring in 4 weeks", "value": countFourWeeks }
+        { "id": "1 Week", "value": countThisWeek },
+        { "id": "2 Weeks", "value": countTwoWeeks },
+        { "id": "3 Weeks", "value": countThreeWeeks },
+        { "id": "4 Weeks", "value": countFourWeeks }
       );
+
+      props.updateTableData({
+        data: allData,
+        keyFilter: ["VAL_NAM_FIRST", "PATRONID", "MEDIATYPE", "MEDIAEXPIRATION"]
+      })
       setPieData(refinedData);
     }
+  }
+
+  function handleSegmentClick(node) {
+    const id = node.data.id
+    const records = weekValues[id]
+    props.updateTableData({
+      data: records,
+      keyFilter: ["VAL_NAM_FIRST", "PATRONID", "MEDIATYPE", "MEDIAEXPIRATION"]
+    })
   }
 
   useEffect(() => {
@@ -113,6 +152,7 @@ const PieChart = (props) => {
   return (
     <>
       {pieData ? <ResponsivePie
+        onClick={props.hasOnClick && handleSegmentClick}
         data={pieData}
         theme={{
           axis: {
@@ -142,7 +182,7 @@ const PieChart = (props) => {
             }
           }
         }}
-        colors={{ scheme: 'pastel2' }}
+        colors={{ scheme: props.colorTheme }}
         margin={isMobile ? { top: 40, right: 0, bottom: 0, left: 0 } : { top: 10, right: 100, bottom: 20, left: 50 }}
         min-width={0}
         innerRadius={props.makePie ? 0 : 0.3}
