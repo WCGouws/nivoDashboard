@@ -101,7 +101,7 @@ const DashBoard = (props) => {
         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: isMobileSmall ? 12 : 4, sm: isMobile ? 12 : 8, md: 12 }}>
           <Grid item xs={isMobileSmall ? 12 : 12} sm={isMobile ? 6 : 4} md={isTablet ? 6 : 3}>
             <Box
-              backgroundColor={colors.black[700]}
+              backgroundColor={theme.palette.mode=="dark" ? colors.black[700]: "#e0e0e0"}
               alignItems="center"
               justifyContent="center"
               gridColumn="span 3"
@@ -114,7 +114,7 @@ const DashBoard = (props) => {
             </Box>
           </Grid>
           <Grid item xs={isMobileSmall ? 12 : 12} sm={isMobile ? 6 : 4} md={isTablet ? 6 : 3}>
-            <Box backgroundColor={colors.black[700]}
+           <Box backgroundColor={theme.palette.mode=="dark" ? colors.black[700]: "#e0e0e0"}
               alignItems="center"
               justifyContent="center"
               gridColumn="span 3"
@@ -126,7 +126,7 @@ const DashBoard = (props) => {
             </Box>
           </Grid>
           <Grid item xs={isMobileSmall ? 12 : 12} sm={isMobile ? 6 : 4} md={isTablet ? 6 : 3}>
-            <Box backgroundColor={colors.black[700]}
+            <Box backgroundColor={theme.palette.mode=="dark" ? colors.black[700]: "#e0e0e0"}
               alignItems="center"
               justifyContent="center"
               gridColumn="span 3"
@@ -138,7 +138,7 @@ const DashBoard = (props) => {
             </Box>
           </Grid>
           <Grid item xs={isMobileSmall ? 12 : 12} sm={isMobile ? 6 : 4} md={isTablet ? 6 : 3}>
-            <Box backgroundColor={colors.black[700]}
+            <Box backgroundColor={theme.palette.mode=="dark" ? colors.black[700]: "#e0e0e0"}
               alignItems="center"
               justifyContent="center"
               gridColumn="span 3"
@@ -150,7 +150,7 @@ const DashBoard = (props) => {
             </Box>
           </Grid>
           <Grid item xs={isMobileSmall ? 12 : 4} sm={isMobile ? 12 : 8} md={isDesktopSmall ? 12 : 6}>
-            <Box backgroundColor={colors.black[700]}
+            <Box backgroundColor={theme.palette.mode=="dark" ? colors.black[700]: "#e0e0e0"}
               alignItems="center"
               justifyContent="center"
               gridColumn="span 3"
@@ -163,7 +163,7 @@ const DashBoard = (props) => {
                 alignItems="center"
               >
                 <Box>
-                  <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>All Devices</Typography>
+                  <Typography variant="h5" fontWeight="600" color={theme.palette.mode=="dark" ? colors.indigo[300]: "#333"}>All Devices</Typography>
                 </Box>
               </Box>
               <Box height="250px" mt="20px">
@@ -172,7 +172,7 @@ const DashBoard = (props) => {
             </Box>
           </Grid>
           <Grid item xs={isMobileSmall ? 12 : 4} sm={isMobile ? 12 : 12} md={isDesktopSmall ? 12 : 6}>
-            <Box backgroundColor={colors.black[700]}
+            <Box backgroundColor={theme.palette.mode=="dark" ? colors.black[700]: "#e0e0e0"}
               alignItems="center"
               justifyContent="center"
               gridColumn="span 3"
@@ -185,7 +185,7 @@ const DashBoard = (props) => {
                 alignItems="center"
               >
                 <Box>
-                  <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>All Devices</Typography>
+                  <Typography variant="h5" fontWeight="600" color={theme.palette.mode=="dark" ? colors.indigo[300]: "#333"}>All Devices</Typography>
                 </Box>
               </Box>
               <Box height="250px" mt="20px">
@@ -198,7 +198,7 @@ const DashBoard = (props) => {
             </Box>
           </Grid>
           <Grid item xs={isMobileSmall ? 12 : 4} sm={isMobile ? 12 : 12} md={6}>
-            <Box backgroundColor={colors.black[700]}
+            <Box backgroundColor={theme.palette.mode=="dark" ? colors.black[700]: "#e0e0e0"}
               alignItems="center"
               justifyContent="center"
               gridColumn="span 3"
@@ -211,7 +211,7 @@ const DashBoard = (props) => {
                 alignItems="center"
               >
                 <Box>
-                  <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}></Typography>
+                  <Typography variant="h5" fontWeight="600" color={theme.palette.mode=="dark" ? colors.indigo[300]: "#29231d"}></Typography>
                 </Box>
               </Box>
               <StatBox
@@ -221,7 +221,7 @@ const DashBoard = (props) => {
             </Box>
           </Grid>
           <Grid item xs={isMobileSmall ? 12 : 4} sm={isMobile ? 12 : 12} md={6}>
-            <Box backgroundColor={colors.black[700]}
+            <Box backgroundColor={theme.palette.mode=="dark" ? colors.black[700]: "#e0e0e0"}
               alignItems="center"
               justifyContent="center"
               gridColumn="span 3"
@@ -234,7 +234,7 @@ const DashBoard = (props) => {
                 alignItems="center"
               >
                 <Box>
-                  <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}></Typography>
+                  <Typography variant="h5" fontWeight="600" color={theme.palette.mode=="dark" ? colors.indigo[300]: "#29231d"}></Typography>
                 </Box>
               </Box>
               <StatBox
@@ -244,7 +244,7 @@ const DashBoard = (props) => {
             </Box>
           </Grid>
           <Grid item xs={isMobileSmall ? 12 : 4} sm={isMobile ? 12 : 12} md={isDesktopSmall ? 12 : 6}>
-            <Box backgroundColor={colors.black[700]}
+            <Box backgroundColor={theme.palette.mode=="dark" ? colors.black[700]: "#e0e0e0"}
               alignItems="center"
               justifyContent="center"
               gridColumn="span 3"
@@ -257,7 +257,7 @@ const DashBoard = (props) => {
                 alignItems="center"
               >
                 <Box>
-                  <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>AppleWatch & Iphone</Typography>
+                  <Typography variant="h5" fontWeight="600" color={theme.palette.mode=="dark" ? colors.indigo[300]: "#333"}>AppleWatch & Iphone</Typography>
                 </Box>
               </Box>
               <Box height="250px" mt="20px">
@@ -266,7 +266,7 @@ const DashBoard = (props) => {
             </Box>
           </Grid>
           <Grid item xs={isMobileSmall ? 12 : 4} sm={isMobile ? 12 : 12} md={isDesktopSmall ? 12 : 6}>
-            <Box backgroundColor={colors.black[700]}
+            <Box backgroundColor={theme.palette.mode=="dark" ? colors.black[700]: "#e0e0e0"}
               alignItems="center"
               justifyContent="center"
               gridColumn="span 3"
@@ -279,7 +279,7 @@ const DashBoard = (props) => {
                 alignItems="center"
               >
                 <Box>
-                  <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>Mobile & Cards</Typography>
+                  <Typography variant="h5" fontWeight="600" color={theme.palette.mode=="dark" ? colors.indigo[300]: "#333"}>Mobile & Cards</Typography>
                 </Box>
               </Box>
               <Box height="250px" mt="20px">
@@ -288,7 +288,7 @@ const DashBoard = (props) => {
             </Box>
           </Grid>
           <Grid item xs={isMobileSmall ? 12 : 4} sm={isMobile ? 12 : 12} md={12}>
-            <Box backgroundColor={colors.black[700]}
+            <Box backgroundColor={theme.palette.mode=="dark" ? colors.black[700]: "#e0e0e0"}
               alignItems="center"
               justifyContent="center"
               gridColumn="span 3"
@@ -302,7 +302,7 @@ const DashBoard = (props) => {
                 alignItems="center"
               >
                 <Box>
-                  <Typography variant="h5" fontWeight="600" color={colors.indigo[300]}>Credentials created over time</Typography>
+                  <Typography variant="h5" fontWeight="600" color={theme.palette.mode=="dark" ? colors.indigo[300]: "#333"}>Credentials created over time</Typography>
                 </Box>
               </Box>
               <Box height="250px" mt="20px">
@@ -327,7 +327,7 @@ const DashBoard = (props) => {
 
               {tabValue === 'expiring' &&
                 <Grid item xs={12} sm={isMobile ? 12 : 12} md={4}>
-                  <Box backgroundColor={colors.black[700]}
+                  <Box backgroundColor={theme.palette.mode=="dark" ? colors.black[700]: "#e0e0e0"}
                     alignItems="center"
                     justifyContent="center"
                     gridColumn="span 3"
@@ -361,7 +361,7 @@ const DashBoard = (props) => {
                 </Grid>
               }
               <Grid item xs={12} sm={tabValue === "expiring" ? isMobile ? 12 : 8 : 12} md={tabValue === "expiring" ? 8 : 12}>
-                <Box backgroundColor={colors.black[700]}
+                <Box backgroundColor={theme.palette.mode=="dark" ? colors.black[700]: "#e0e0e0"}
                   alignItems="center"
                   justifyContent="center"
                   gridColumn="span 3"

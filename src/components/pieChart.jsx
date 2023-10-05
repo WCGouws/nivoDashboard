@@ -219,7 +219,7 @@ const PieChart = (props) => {
             itemsSpacing: isMobile ? 2 : 4,
             itemWidth: isMobile ? 74 : 150,
             itemHeight: 20,
-            itemTextColor: colors.lightGray[600],
+            itemTextColor: theme.palette.mode=="dark" ? colors.lightGray[600]: "#333",
             itemDirection: isMobile ? 'top-to-bottom' : 'left-to-right',
             itemOpacity: 1,
             symbolSize: isMobile ? 8 : 12,
