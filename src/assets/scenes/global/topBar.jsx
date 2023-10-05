@@ -11,10 +11,11 @@ import { Link } from "react-router-dom";
 import DrawerComponent from "../../../components/drawer";
 
 
-const TopBar = () => {
+const TopBar = (props) => {
     const theme = useTheme();
     const colors = colorTokens(theme.palette.mode);
     const colorMode = useContext(ColorModeContext);
+    const currentPage = location.pathname.split('/').pop();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     const [selectedPage, setSelectedPage] = useState("all");
     const [underlinedPage, setUnderlinedPage] = useState({
@@ -36,6 +37,11 @@ const TopBar = () => {
         setSelectedPage(newPage)
         setUnderlinedPage(newPageSelection)
     }
+
+    useEffect(() => {
+        handlePageChange(currentPage)
+    }, [currentPage])
+
 
 
     return (
