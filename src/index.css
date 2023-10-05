@@ -15,6 +15,25 @@ body,
   position: relative;
 }
 
+.special-grid {
+  max-height: 20rem;
+}
+
+.special-box {
+  max-height: 70vh !important;
+  overflow-y: auto;
+}
+
+.table-non-popup {
+  width: 100% !important;
+}
+
+.table-header-style{
+  text-align: left !important;
+  padding: 0 0 10px 0;
+  /* border-bottom: 2px solid white; */
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -30,4 +49,15 @@ body,
 
 ::-webkit-scrollbar-track:hover {
   background: #555;
+}
+
+@media (max-width: 600px) {
+  .table-non-popup {
+    font-size: 0.6rem;
+    text-align: center;
+  }
+
+  .table-header-style {
+    text-align: center !important;
+  }
 }
