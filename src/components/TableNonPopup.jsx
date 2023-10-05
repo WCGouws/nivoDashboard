@@ -15,7 +15,7 @@ const TableNonPopup = ({ tableData, tabValue, lostCards, printedCards }) => {
       setDataToShow(tableData)
     }
   }, [tableData])
-  
+
 
   useEffect(() => {
     if (tabValue === "lost") {
@@ -32,7 +32,7 @@ const TableNonPopup = ({ tableData, tabValue, lostCards, printedCards }) => {
       setDataToShow(printedCardsObj)
     }
   }, [tabValue])
-  
+
   return (
     <>
       {!dataToShow || dataToShow.data.length === 0 ?
@@ -43,7 +43,7 @@ const TableNonPopup = ({ tableData, tabValue, lostCards, printedCards }) => {
           <table className="table table-non-popup">
             <thead>
               <tr>
-                <th>#</th>
+                <th className='table-header-index'>#</th>
                 {dataToShow.keyFilter.map((key, i) =>
                   <th className='table-header-style' key={i} scope="col">{key}</th>
                 )}
@@ -51,7 +51,7 @@ const TableNonPopup = ({ tableData, tabValue, lostCards, printedCards }) => {
             </thead>
             <tbody className='table-body'>
               {dataToShow.data.map((record, i) => (
-                <tr key={i} style={{backgroundColor: record["rowColor"] ? record["rowColor"] : "rgba(255, 255, 255, 0.1)", borderBottom: record["rowColorBorder"]}}>
+                <tr key={i} style={{ backgroundColor: record["rowColor"] ? record["rowColor"] : "rgba(255, 255, 255, 0.1)", borderBottom: record["rowColorBorder"] }}>
                   <th scope='row'>{i + 1}</th>
                   {dataToShow.keyFilter.map((key, i) =>
                     <td key={i}>{record[key]}</td>
