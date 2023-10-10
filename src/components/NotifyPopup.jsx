@@ -9,21 +9,26 @@ import DialogTitle from '@mui/material/DialogTitle';
 export default function NotifyPopup({ handleClose, popupConfig }) {
   const [showEntireRecord, setShowEntireRecord] = useState(false)
 
-  const handleSendNotification = () => {
-    window.alert("Add some functionality my dude")
-    // /api/v1/email
-    // payload (patron id?)
-    // notification type? - expiring/lost/etc?
+  const handleSendNotification = async () => {
 
-    let payload = {
-      recordData: popupConfig.data, // payload
-      notificationType: popupConfig.type
+    const body = {
+      recordData: popupConfig.data, // object
+      isExpiring: popupConfig.type === "expiring ID" ? true : false // used on server side to change email body
+    }
+
+    const response = await fetch(`${config.apiBaseUrl}/api/v1/email`, {method: "POST", body: JSON.stringify(body)})
+    const respData = await response.json();
+
+    if (respData) { // If true / if email was sent
+      window.alert("Notification sent.")
+    } else {
+      window.alert("Something went wrong, please try again.") // or whatever
     }
   }
 
   return (
     <>
-      {popupConfig.data &&
+      {popupConfig.data && popupConfig.type &&
         <div>
           <Dialog
             open={popupConfig.show}
