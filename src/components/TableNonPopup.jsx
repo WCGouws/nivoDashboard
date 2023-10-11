@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import NotifyPopup from './NotifyPopup';
 
 const TableNonPopup = ({ tableData, tabValue, lostCards, printedCards }) => {
   const [dataToShow, setDataToShow] = useState(null);
+  const [popupConfig, setPopupConfig] = useState({
+    show: false,
+    type: "", // expiring, lost card, etc
+    data: null
+  });
 
+  const handleClosePopup = () => setPopupConfig({show: false, type: "", data: null});
+  const handleShowPopup = (record) => setPopupConfig({show: true, type: "expiring ID",  data: record})
 
   useEffect(() => {
     // if (!keyFilter) { // perhaps make tableData.keyFilter
@@ -40,7 +48,9 @@ const TableNonPopup = ({ tableData, tabValue, lostCards, printedCards }) => {
         :
         <div>
           {/* <h2>Segment Data</h2> */}
-          <table className="table table-non-popup">
+          {/* Eventually want to make the below popup only show in the table, maybe. */}
+          <NotifyPopup handleClose={handleClosePopup} popupConfig={popupConfig}/>
+          <table className="table-non-popup">
             <thead>
               <tr>
                 <th className='table-header-index'>#</th>
@@ -51,7 +61,7 @@ const TableNonPopup = ({ tableData, tabValue, lostCards, printedCards }) => {
             </thead>
             <tbody className='table-body'>
               {dataToShow.data.map((record, i) => (
-                <tr key={i} style={{ backgroundColor: record["rowColor"] ? record["rowColor"] : "rgba(255, 255, 255, 0.1)", borderBottom: record["rowColorBorder"] }}>
+                <tr key={i} style={{ backgroundColor: record["rowColor"] ? record["rowColor"] : "rgba(255, 255, 255, 0.1)"}} onClick={() => handleShowPopup(record)}>
                   <th scope='row'>{i + 1}</th>
                   {dataToShow.keyFilter.map((key, i) =>
                     <td key={i}>{record[key]}</td>
