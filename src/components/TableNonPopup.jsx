@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useTheme } from "@mui/material";
+import { colorTokens } from "../theme";
 
 const TableNonPopup = ({ tableData, tabValue, lostCards, printedCards }) => {
   const [dataToShow, setDataToShow] = useState(null);
+  const theme = useTheme();
+  //const colors = colorTokens(theme.palette.mode);
 
 
   useEffect(() => {
@@ -43,15 +47,15 @@ const TableNonPopup = ({ tableData, tabValue, lostCards, printedCards }) => {
           <table className="table table-non-popup">
             <thead>
               <tr>
-                <th className='table-header-index'>#</th>
+                <th className={theme.palette.mode == "dark" ? 'table-header-index' : 'table-header-index-lightmode '}>#</th>
                 {dataToShow.keyFilter.map((key, i) =>
-                  <th className='table-header-style' key={i} scope="col">{key}</th>
+                  <th className={theme.palette.mode == "dark" ? 'table-header-style' : 'table-header-style-lightmode'} key={i} scope="col">{key}</th>
                 )}
               </tr>
             </thead>
             <tbody className='table-body'>
               {dataToShow.data.map((record, i) => (
-                <tr key={i} style={{ backgroundColor: record["rowColor"] ? record["rowColor"] : "rgba(255, 255, 255, 0.1)", borderBottom: record["rowColorBorder"] }}>
+                <tr key={i} style={{ backgroundColor: record["rowColor"] ? record["rowColor"] : "rgba(0, 0, 0, 0.1)", borderBottom: record["rowColorBorder"] }}>
                   <th scope='row'>{i + 1}</th>
                   {dataToShow.keyFilter.map((key, i) =>
                     <td key={i}>{record[key]}</td>

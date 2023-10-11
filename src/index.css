@@ -34,13 +34,27 @@ body,
   padding: 0 0 10px 0;
   position: sticky;
   top: 0;
-
-  /* border-bottom: 2px solid white; */
 }
 
 .table-header-index {
   text-align: center !important;
   background-color: #1b2229;
+  padding: 0 0 10px 0;
+  position: sticky;
+  top: 0;
+}
+
+.table-header-style-lightmode {
+  text-align: left !important;
+  background-color: rgb(235, 229, 229);
+  padding: 0 0 10px 0;
+  position: sticky;
+  top: 0;
+}
+
+.table-header-index-lightmode {
+  text-align: center !important;
+  background-color: rgb(235, 229, 229);
   padding: 0 0 10px 0;
   position: sticky;
   top: 0;

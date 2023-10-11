@@ -66,19 +66,19 @@ const TopBar = (props) => {
                             />
                         </Box>
                     </Box>
-                    <Button sx={underlinedPage["all"] ? { borderBottom: "2px solid orange", m: "0 2px 0 2px", color: colors.black[100], fontSize: "15px", height: "60%" } : { m: "0 5px 0 5px", color: colors.black[100], fontSize: "15px", height: "70%" }} size="large" component={Link} to="/all" onClick={() => handlePageChange("all")}>
+                    <Button sx={underlinedPage["all"] ? { borderBottom: "2px solid #A31F34", m: "0 2px 0 2px", color: colors.black[100], fontSize: "15px", height: "60%" } : { m: "0 5px 0 5px", color: colors.black[100], fontSize: "15px", height: "70%" }} size="large" component={Link} to="/all" onClick={() => handlePageChange("all")}>
                         <HomeoutlinedIcon />
                         Home
                     </Button>
-                    <Button sx={underlinedPage["students"] ? { borderBottom: "2px solid orange", m: "0 2px 0 2px", color: colors.black[100], fontSize: "15px", height: "60%" } : { m: "0 5px 0 5px", color: colors.black[100], fontSize: "15px", height: "70%" }} size="large" component={Link} to="/students" onClick={() => handlePageChange("students")}>
+                    <Button sx={underlinedPage["students"] ? { borderBottom: "2px solid #A31F34", m: "0 2px 0 2px", color: colors.black[100], fontSize: "15px", height: "60%" } : { m: "0 5px 0 5px", color: colors.black[100], fontSize: "15px", height: "70%" }} size="large" component={Link} to="/students" onClick={() => handlePageChange("students")}>
                         <PeopleoutlinedIcon />
                         Students
                     </Button>
-                    <Button sx={underlinedPage["employees"] ? { borderBottom: "2px solid orange", m: "0 2px 0 2px", color: colors.black[100], fontSize: "15px", height: "60%" } : { m: "0 5px 0 5px", color: colors.black[100], fontSize: "15px", height: "70%" }} size="large" component={Link} to="/employees" onClick={() => handlePageChange("employees")}>
+                    <Button sx={underlinedPage["employees"] ? { borderBottom: "2px solid #A31F34", m: "0 2px 0 2px", color: colors.black[100], fontSize: "15px", height: "60%" } : { m: "0 5px 0 5px", color: colors.black[100], fontSize: "15px", height: "70%" }} size="large" component={Link} to="/employees" onClick={() => handlePageChange("employees")}>
                         <PersonoutlinedIcon />
                         Employees
                     </Button>
-                    <Button sx={underlinedPage["affiliates"] ? { borderBottom: "2px solid orange", m: "0 2px 0 2px", color: colors.black[100], fontSize: "15px", height: "60%" } : { m: "0 5px 0 5px", color: colors.black[100], fontSize: "15px", height: "70%" }} size="large" component={Link} to="/affiliates" onClick={() => handlePageChange("affiliates")}>
+                    <Button sx={underlinedPage["affiliates"] ? { borderBottom: "2px solid #A31F34", m: "0 2px 0 2px", color: colors.black[100], fontSize: "15px", height: "60%" } : { m: "0 5px 0 5px", color: colors.black[100], fontSize: "15px", height: "70%" }} size="large" component={Link} to="/affiliates" onClick={() => handlePageChange("affiliates")}>
                         <PersonoutlinedIcon />
                         Affiliates
                     </Button>
