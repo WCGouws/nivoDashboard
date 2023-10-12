@@ -89,7 +89,7 @@ const DashBoard = (props) => {
           <Grid item xs={12} sm={6} md={6} textAlign={isMobile ? "start" : "right"}>
             <Box>
               <Button
-                sx={{ backgroundColor: colors.gray[700], border: 1, borderColor: colors.black[800], color: colors.gray[100], fontSize: "14px", fontWeight: "bold", padding: "10px 20px", mb: "30px" }}
+                sx={{ backgroundColor: colors.gray[700], border: 1, borderColor: colors.black[800], boxShadow: theme.palette.mode == "dark" ? "5px 5px 5px #12171c" : "5px 5px 5px #d5d7da", color: colors.gray[100], fontSize: "14px", fontWeight: "bold", padding: "10px 20px", mb: "30px" }}
                 onClick={() => toPDF()}>
                 <DownloadOutlinedIcon sx={{ mr: "0px" }} />
                 {!isMobile && "Download"}
@@ -104,6 +104,7 @@ const DashBoard = (props) => {
             <Box backgroundColor={theme.palette.mode == "dark" ? colors.black[600] : "rgb(247, 247, 247)"}
               border={2}
               borderRadius={3}
+              boxShadow={theme.palette.mode == "dark" ? "5px 5px 5px #12171c" : "5px 5px 5px #d5d7da"}
               borderColor={theme.palette.mode == "dark" ? colors.black[800] : colors.black[900]}
               alignItems="center"
               justifyContent="center"
@@ -120,6 +121,7 @@ const DashBoard = (props) => {
             <Box backgroundColor={theme.palette.mode == "dark" ? colors.black[600] : "rgb(247, 247, 247)"}
               border={2}
               borderRadius={3}
+              boxShadow={theme.palette.mode == "dark" ? "5px 5px 5px #12171c" : "5px 5px 5px #d5d7da"}
               borderColor={theme.palette.mode == "dark" ? colors.black[800] : colors.black[900]}
               alignItems="center"
               justifyContent="center"
@@ -135,6 +137,7 @@ const DashBoard = (props) => {
             <Box backgroundColor={theme.palette.mode == "dark" ? colors.black[600] : "rgb(247, 247, 247)"}
               border={2}
               borderRadius={3}
+              boxShadow={theme.palette.mode == "dark" ? "5px 5px 5px #12171c" : "5px 5px 5px #d5d7da"}
               borderColor={theme.palette.mode == "dark" ? colors.black[800] : colors.black[900]}
               alignItems="center"
               justifyContent="center"
@@ -150,6 +153,7 @@ const DashBoard = (props) => {
             <Box backgroundColor={theme.palette.mode == "dark" ? colors.black[600] : "rgb(247, 247, 247)"}
               border={2}
               borderRadius={3}
+              boxShadow={theme.palette.mode == "dark" ? "5px 5px 5px #12171c" : "5px 5px 5px #d5d7da"}
               borderColor={theme.palette.mode == "dark" ? colors.black[800] : colors.black[900]}
               alignItems="center"
               justifyContent="center"
@@ -165,6 +169,7 @@ const DashBoard = (props) => {
             <Box backgroundColor={theme.palette.mode == "dark" ? colors.black[600] : "rgb(247, 247, 247)"}
               border={2}
               borderRadius={3}
+              boxShadow={theme.palette.mode == "dark" ? "5px 5px 5px #12171c" : "5px 5px 5px #d5d7da"}
               borderColor={theme.palette.mode == "dark" ? colors.black[800] : colors.black[900]}
               alignItems="center"
               justifyContent="center"
@@ -182,7 +187,7 @@ const DashBoard = (props) => {
                 </Box>
               </Box>
               <Box height="250px" mt="20px">
-                <PieChart data={responseData} displayAll={true} watchPhone={false} mobileCard={false} makePie={false} arcLabel={true} endPoint={props.endPoint} colorTheme={"pastel2"} />
+                <PieChart data={responseData} displayAll={true} watchPhone={false} mobileCard={false} makePie={false} arcLabel={true} endPoint={props.endPoint} colorTheme={'dark2'} />
               </Box>
             </Box>
           </Grid>
@@ -190,6 +195,7 @@ const DashBoard = (props) => {
             <Box backgroundColor={theme.palette.mode == "dark" ? colors.black[600] : "rgb(247, 247, 247)"}
               border={2}
               borderRadius={3}
+              boxShadow={theme.palette.mode == "dark" ? "5px 5px 5px #12171c" : "5px 5px 5px #d5d7da"}
               borderColor={theme.palette.mode == "dark" ? colors.black[800] : colors.black[900]}
               alignItems="center"
               justifyContent="center"
@@ -219,6 +225,7 @@ const DashBoard = (props) => {
             <Box backgroundColor={theme.palette.mode == "dark" ? colors.black[600] : "rgb(247, 247, 247)"}
               border={2}
               borderRadius={3}
+              boxShadow={theme.palette.mode == "dark" ? "5px 5px 5px #12171c" : "5px 5px 5px #d5d7da"}
               borderColor={theme.palette.mode == "dark" ? colors.black[800] : colors.black[900]}
               alignItems="center"
               justifyContent="center"
@@ -245,6 +252,7 @@ const DashBoard = (props) => {
             <Box backgroundColor={theme.palette.mode == "dark" ? colors.black[600] : "rgb(247, 247, 247)"}
               border={2}
               borderRadius={3}
+              boxShadow={theme.palette.mode == "dark" ? "5px 5px 5px #12171c" : "5px 5px 5px #d5d7da"}
               borderColor={theme.palette.mode == "dark" ? colors.black[800] : colors.black[900]}
               alignItems="center"
               justifyContent="center"
@@ -271,6 +279,7 @@ const DashBoard = (props) => {
             <Box backgroundColor={theme.palette.mode == "dark" ? colors.black[600] : "rgb(247, 247, 247)"}
               border={2}
               borderRadius={3}
+              boxShadow={theme.palette.mode == "dark" ? "5px 5px 5px #12171c" : "5px 5px 5px #d5d7da"}
               borderColor={theme.palette.mode == "dark" ? colors.black[800] : colors.black[900]}
               alignItems="center"
               justifyContent="center"
@@ -296,6 +305,7 @@ const DashBoard = (props) => {
             <Box backgroundColor={theme.palette.mode == "dark" ? colors.black[600] : "rgb(247, 247, 247)"}
               border={2}
               borderRadius={3}
+              boxShadow={theme.palette.mode == "dark" ? "5px 5px 5px #12171c" : "5px 5px 5px #d5d7da"}
               borderColor={theme.palette.mode == "dark" ? colors.black[800] : colors.black[900]}
               alignItems="center"
               justifyContent="center"
@@ -321,6 +331,7 @@ const DashBoard = (props) => {
             <Box backgroundColor={theme.palette.mode == "dark" ? colors.black[600] : "rgb(247, 247, 247)"}
               border={2}
               borderRadius={3}
+              boxShadow={theme.palette.mode == "dark" ? "5px 5px 5px #12171c" : "5px 5px 5px #d5d7da"}
               borderColor={theme.palette.mode == "dark" ? colors.black[800] : colors.black[900]}
               alignItems="center"
               justifyContent="center"
@@ -363,6 +374,7 @@ const DashBoard = (props) => {
                   <Box backgroundColor={theme.palette.mode == "dark" ? colors.black[600] : "rgb(247, 247, 247)"}
                     border={2}
                     borderRadius={3}
+                    boxShadow={theme.palette.mode == "dark" ? "5px 5px 5px #12171c" : "5px 5px 5px #d5d7da"}
                     borderColor={theme.palette.mode == "dark" ? colors.black[800] : colors.black[900]}
                     alignItems="center"
                     justifyContent="center"
@@ -400,6 +412,7 @@ const DashBoard = (props) => {
                 <Box backgroundColor={theme.palette.mode == "dark" ? colors.black[600] : "rgb(247, 247, 247)"}
                   border={2}
                   borderRadius={3}
+                  boxShadow={theme.palette.mode == "dark" ? "5px 5px 5px #12171c" : "5px 5px 5px #d5d7da"}
                   borderColor={theme.palette.mode == "dark" ? colors.black[800] : colors.black[900]}
                   alignItems="center"
                   justifyContent="center"

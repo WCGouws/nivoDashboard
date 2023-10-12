@@ -185,11 +185,11 @@ const PieChart = (props) => {
         colors={{ scheme: props.colorTheme }}
         margin={isMobile ? { top: 40, right: 0, bottom: 0, left: 0 } : { top: 10, right: 100, bottom: 20, left: 50 }}
         min-width={0}
-        innerRadius={props.makePie ? 0 : 0.3}
-        padAngle={0.7}
+        innerRadius={props.makePie ? 0 : 0.2}
+        padAngle={1.5}
         cornerRadius={3}
         activeOuterRadiusOffset={8}
-        borderWidth={1}
+        borderWidth={2}
         borderColor={{
           from: 'color',
           modifiers: [

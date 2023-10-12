@@ -28,6 +28,11 @@ body,
   width: 100% !important;
 }
 
+.table-non-popup tr:hover {
+  background-color: #7d7d7d36 !important;
+  cursor: pointer;
+}
+
 .table-header-style {
   text-align: left !important;
   background-color: #1b2229;
@@ -58,6 +63,24 @@ body,
   padding: 0 0 10px 0;
   position: sticky;
   top: 0;
+}
+
+.record-popup {}
+
+.entire-record {
+  padding: 1rem;
+}
+
+.entire-record div {
+  border-bottom: 1px solid rgba(128, 128, 128, 0.342);
+}
+
+.entire-record .left {
+  float: left;
+}
+
+.entire-record .right {
+  float: right;
 }
 
 ::-webkit-scrollbar {
