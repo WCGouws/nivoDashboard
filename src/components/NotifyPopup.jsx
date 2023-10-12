@@ -11,12 +11,20 @@ export default function NotifyPopup({ handleClose, popupConfig }) {
 
   const handleSendNotification = async () => {
 
-    const body = {
+    const payload = {
       recordData: popupConfig.data, // object
       isExpiring: popupConfig.type === "expiring ID" ? true : false // used on server side to change email body
     }
 
-    const response = await fetch(`${config.apiBaseUrl}/api/v1/email`, {method: "POST", body: JSON.stringify(body)})
+    const options = {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json"
+      },
+    }
+
+    const response = await fetch(`${config.apiBaseUrl}/api/v1/email/notification`, options)
     const respData = await response.json();
 
     if (respData) { // If true / if email was sent
