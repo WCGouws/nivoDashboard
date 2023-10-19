@@ -130,7 +130,7 @@ const PieChart = (props) => {
 
       props.updateTableData({
         data: allData,
-        keyFilter: ["VAL_NAM_FIRST", "PATRONID", "MEDIATYPE", "MEDIAEXPIRATION"]
+        keyFilter: ["VAL_NAM_FIRST", "PATRONID", "UF_MEDIATYPE", "MEDIAEXPIRATION"]
       })
       setPieData(refinedData);
     }
@@ -141,7 +141,7 @@ const PieChart = (props) => {
     const records = weekValues[id]
     props.updateTableData({
       data: records,
-      keyFilter: ["VAL_NAM_FIRST", "PATRONID", "MEDIATYPE", "MEDIAEXPIRATION"]
+      keyFilter: ["VAL_NAM_FIRST", "PATRONID", "UF_MEDIATYPE", "MEDIAEXPIRATION"]
     })
   }
 
