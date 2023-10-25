@@ -129,7 +129,7 @@ const BarChart = (props) => {
               },
               legend: {
                 text: {
-                  fill: colors.lightGray[700]
+                  fill: theme.palette.mode == "dark" ? colors.lightGray[700] : colors.black[200]
                 }
               },
               ticks: {
@@ -138,13 +138,13 @@ const BarChart = (props) => {
                   strokeWidth: 1
                 },
                 text: {
-                  fill: colors.lightGray[700]
+                  fill: theme.palette.mode == "dark" ? colors.lightGray[700] : "#333"
                 }
               }
             },
             legends: {
               text: {
-                fill: colors.lightGray[700]
+                fill: theme.palette.mode == "dark" ? colors.lightGray[700] : colors.black[100]
               }
             }
           }}
