@@ -13,7 +13,17 @@ const TableNonPopup = ({ tableData, tabValue, lostCards, printedCards }) => {
   });
 
   const handleClosePopup = () => setPopupConfig({ show: false, type: "", data: null });
-  const handleShowPopup = (record) => setPopupConfig({ show: true, type: "expiring ID", data: record })
+  const handleShowPopup = (record) => setPopupConfig({ show: true, type: getType(), data: record })
+
+  function getType(){
+    if(tabValue === "lost"){
+      return "concerning amount of lost cards";
+    } else if(tabValue === "printed"){
+      return "concerning amount of printed cards";
+    } else if(tabValue === "expiring"){
+      return "expiring ID";
+    }
+  }
 
   useEffect(() => {
     // if (!keyFilter) { // perhaps make tableData.keyFilter
